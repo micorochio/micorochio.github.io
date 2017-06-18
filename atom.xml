@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-06-18T15:24:23.000Z</updated>
+  <updated>2017-06-18T15:29:34.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -16,11 +16,39 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>自动化部署工具 Ansible填坑记录</title>
+    <title>Ansible自动化部署从入门到弃坑</title>
+    <link href="http://micorochio.github.io/2017/06/19/ansible-learning-03/"/>
+    <id>http://micorochio.github.io/2017/06/19/ansible-learning-03/</id>
+    <published>2017-06-18T17:48:58.000Z</published>
+    <updated>2017-06-18T15:29:34.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>这篇文章正在写……</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;这篇文章正在写……&lt;/p&gt;
+
+    
+    </summary>
+    
+    
+      <category term="Linux" scheme="http://micorochio.github.io/tags/Linux/"/>
+    
+      <category term="ansible" scheme="http://micorochio.github.io/tags/ansible/"/>
+    
+      <category term="运维" scheme="http://micorochio.github.io/tags/%E8%BF%90%E7%BB%B4/"/>
+    
+      <category term="自动化持续部署" scheme="http://micorochio.github.io/tags/%E8%87%AA%E5%8A%A8%E5%8C%96%E6%8C%81%E7%BB%AD%E9%83%A8%E7%BD%B2/"/>
+    
+  </entry>
+  
+  <entry>
+    <title>Ansible自动化部署入门</title>
     <link href="http://micorochio.github.io/2017/06/05/ansible-learning-02/"/>
     <id>http://micorochio.github.io/2017/06/05/ansible-learning-02/</id>
     <published>2017-06-04T17:48:58.000Z</published>
-    <updated>2017-06-18T15:24:23.000Z</updated>
+    <updated>2017-06-18T15:30:04.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1112615-1a9c0f3807270562.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <ul>
@@ -137,7 +165,7 @@
 <p><img src="http://upload-images.jianshu.io/upload_images/1112615-acaa83da1e5a0e4f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="ansible项目结构文件"></p>
 <h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><p><a href="http://ansible-tran.readthedocs.io/en/latest/docs/intro_inventory.html#inventoryformat" target="_blank" rel="external">http://ansible-tran.readthedocs.io/en/latest/docs/intro_inventory.html#inventoryformat</a></p>
 <hr>
-<p>转载请注明来自MaxZing : <a href="http://www.jianshu.com/p/dd9e8ba5ec65" target="_blank" rel="external">http://www.jianshu.com/p/dd9e8ba5ec65</a></p>
+<p>转载请注明来自MaxZing : <a href="https://micorochio.github.io/2017/06/05/ansible-learning-02/">https://micorochio.github.io/2017/06/05/ansible-learning-02/</a></p>
 ]]></content>
     
     <summary type="html">
@@ -1622,72 +1650,6 @@
       <category term="系统" scheme="http://micorochio.github.io/tags/%E7%B3%BB%E7%BB%9F/"/>
     
       <category term="CentOS" scheme="http://micorochio.github.io/tags/CentOS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>用WebStorm创建AngularJS 2项目</title>
-    <link href="http://micorochio.github.io/2017/01/02/build-an-angularJS-2-project/"/>
-    <id>http://micorochio.github.io/2017/01/02/build-an-angularJS-2-project/</id>
-    <published>2017-01-01T16:31:33.000Z</published>
-    <updated>2017-01-13T11:33:14.000Z</updated>
-    
-    <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1112615-08353dbd6359df86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="第一步"></p>
-<ul>
-<li>第二步，创建Angular CLI项目</li>
-</ul>
-<p><em>ps:<a href="http://www.infoq.com/cn/news/2016/05/angular-cli-ng-conf-2016" target="_blank" rel="external">有26%的人称 Angular 2 环境设置是一大入门门槛，有22%的人说环境设置太过复杂。Angular CLI的诞生，正是为了解决这个问题</a></em></p>
-<p>如果你没有安装CLI，附上官网给你：<a href="https://cli.angular.io/" target="_blank" rel="external">https://cli.angular.io/</a></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-081998ce3212083c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br><a id="more"></a></p>
-<p>解释一下3个框框</p>
-<ol>
-<li>location: 是项目存放位置，最后untitled可以改成你需要的项目名字</li>
-<li>Node interpreter: 是Node.js安装的位置</li>
-<li>Angular CLI： 是Angular CLI安装位置，可以安装在任何位置，为了省事，全局安装吧。<br><strong>命令行：</strong><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">// -g 是全局安装的意思</div><div class="line">sudo npm install angular-cli -g</div></pre></td></tr></table></figure>
-</li>
-</ol>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-be60cb80930fbf66.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="龟速的npm"></p>
-<p>配置好Angular CLI的路径后点击 create</p>
-<ul>
-<li>第三步, 交给Storm吧</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-47ecfd4ea6fc6110.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>还是要吐槽一下npm的速度，WebStorm没有给这玩意儿加速。<br>跑完就可以Coding了。484超级方便。</p>
-<ul>
-<li>第四步， 配置运行</li>
-</ul>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-2476d5776e88ca4b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="选择  Edit Configurrations…"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-99cde7e9fc02afac.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="添加Node.js配置"></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-6a5747598c148c93.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="配置 npm 命令"></p>
-<p>点击运行，启动服务</p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-bdd32088e1b01e00.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-a0f61e80fff684d1.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="将地址输到浏览器"></p>
-<p>附上超级英雄的Angular2 的官方教程：<a href="https://angular.cn/docs/ts/latest/tutorial/" target="_blank" rel="external">https://angular.cn/docs/ts/latest/tutorial/</a></p>
-<p>小伙子，去搞前端吧！</p>
-<hr>
-<p>love &amp; peace！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-08353dbd6359df86.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;第一步&quot;&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;第二步，创建Angular CLI项目&lt;/li&gt;
-&lt;/ul&gt;
-&lt;p&gt;&lt;em&gt;ps:&lt;a href=&quot;http://www.infoq.com/cn/news/2016/05/angular-cli-ng-conf-2016&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;有26%的人称 Angular 2 环境设置是一大入门门槛，有22%的人说环境设置太过复杂。Angular CLI的诞生，正是为了解决这个问题&lt;/a&gt;&lt;/em&gt;&lt;/p&gt;
-&lt;p&gt;如果你没有安装CLI，附上官网给你：&lt;a href=&quot;https://cli.angular.io/&quot; target=&quot;_blank&quot; rel=&quot;external&quot;&gt;https://cli.angular.io/&lt;/a&gt;&lt;/p&gt;
-&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-081998ce3212083c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;&quot;&gt;&lt;br&gt;
-    
-    </summary>
-    
-    
-      <category term="Web" scheme="http://micorochio.github.io/tags/Web/"/>
-    
-      <category term="JavaScript" scheme="http://micorochio.github.io/tags/JavaScript/"/>
-    
-      <category term="前端" scheme="http://micorochio.github.io/tags/%E5%89%8D%E7%AB%AF/"/>
-    
-      <category term="Angular" scheme="http://micorochio.github.io/tags/Angular/"/>
     
   </entry>
   
