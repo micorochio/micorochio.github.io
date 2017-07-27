@@ -101,7 +101,7 @@
 <meta property="og:description" content="0x00 @Before上次Ansible自动部署入门，最后写了点playbook的项目，了解了一些如task，template，vars等简单的用法。但是真正的Ansible项目并不是通过主机来分Roles的，而是一个Ansible管理多台主机，用Roles来区分项目。所以这一次，我带来了不一样的使用姿势。">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-d08c2ab7f6cf7012.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-93ef05cd84dfacb3.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-06-24T07:26:36.000Z">
+<meta property="og:updated_time" content="2017-06-24T07:37:56.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Ansible自动化部署从入门到弃坑">
 <meta name="twitter:description" content="0x00 @Before上次Ansible自动部署入门，最后写了点playbook的项目，了解了一些如task，template，vars等简单的用法。但是真正的Ansible项目并不是通过主机来分Roles的，而是一个Ansible管理多台主机，用Roles来区分项目。所以这一次，我带来了不一样的使用姿势。">
@@ -433,7 +433,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">ansible-playbook example.yml – tags “configuration,packages”</div></pre></td></tr></table></figure>
 <p>task可以打上任意多个tag。</p>
 <h3 id="1x04-变量"><a href="#1x04-变量" class="headerlink" title="1x04 变量"></a>1x04 变量</h3><p>变量分好几种，可以定义在playbook中，也可以定义在hosts文件上，后面也可以写在roles的vars文件夹中。<br>上面介绍循环迭代，<code>{ {item.file_src} }</code>就是变量引用，<code>with_items</code>下的就是变量值。变量可以放置在几乎所有地方，除了关键字外，其他地方都可以引用变量。Ansible自己也定义了好多自带的变量，有兴趣的可以自己看看</p>
-<p>hosts主机变量如下<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span> 针对主机的主机变量</div><div class="line">127.0.0.1 my_name_is=zing</div><div class="line"><span class="meta"></span></div><div class="line"># 针对组的变量</div><div class="line">[webServer]</div><div class="line">domain1.example.com</div><div class="line">domain2.example.com</div><div class="line">[webServer:vars]</div><div class="line">server_user_name_is="zing"</div><div class="line">server_user_is="java_programer"</div><div class="line"><span class="meta"></span></div><div class="line"># 针对所有主机的所有变量</div><div class="line">[all:vars]</div><div class="line">user_name_is="zing"</div><div class="line">user_is="java_programer"</div></pre></td></tr></table></figure></p>
+<p>hosts主机变量如下<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 针对主机的主机变量</span></div><div class="line">127.0.0.1 my_name_is=zing</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 针对组的变量</span></div><div class="line">[webServer]</div><div class="line">domain1.example.com</div><div class="line">domain2.example.com</div><div class="line">[webServer:vars]</div><div class="line">server_user_name_is="zing"</div><div class="line">server_user_is="java_programer"</div><div class="line"><span class="meta"></span></div><div class="line">#<span class="bash"> 针对所有主机的所有变量</span></div><div class="line">[all:vars]</div><div class="line">user_name_is="zing"</div><div class="line">user_is="java_programer"</div></pre></td></tr></table></figure></p>
 <p>使用变量只要在正确的位置加上变量引用<code>{ { varable_name } }</code>就好<br><figure class="highlight yml"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"><span class="attr">- hosts:</span> <span class="string">local</span></div><div class="line"><span class="attr">  remote_user:</span> <span class="string">"&#123; &#123; user_name_is &#125; &#125;”</span></div><div class="line">  tasks:</div><div class="line">    - name: copy properties</div><div class="line">      copy: src=/home/zing/project.properties</div></pre></td></tr></table></figure></p>
 <blockquote>
 <p>Ansible支持复杂变量，我们的<code>{ { item.src } }</code>就是一个复杂型的，通过<code>.</code>来引用item下的src值。所以，变量名称不要带<code>.</code>。</p>
@@ -476,7 +476,9 @@
 <p>下面的东西就交给Ansible了，不再需要用繁琐的Shell脚本来写Jenkins部署脚本了。并且，每个项目都是一键发布，而且不用维护用于项目发布的部署shell，十分轻量，尤其是对微服务，批量扩展和修改很方便。</p>
 <p>写到这里就出坑了，毕竟不是专业的运维，多谢观看</p>
 <p>##5x00 @After<br>参考：<br>极力推荐=》<a href="https://github.com/ansible/ansible-examples" target="_blank" rel="external">https://github.com/ansible/ansible-examples</a></p>
-<p>文章内代码部分，双花括号之间没有空格，为博客软件bug，无法解决。<br>&#123;&#123; &#125;&#125;</p>
+<blockquote>
+<p>文章内代码部分，双花括号之间没有空格，为博客软件bug，无法解决。ansible项目中使用&#123;&#123; &#125;&#125;</p>
+</blockquote>
 <p>转载请注明出处：<a href="https://micorochio.github.io/2017/06/19/ansible-learning-03/">https://micorochio.github.io/2017/06/19/ansible-learning-03/</a></p>
 
       
@@ -535,6 +537,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2017/07/28/reading-effective-java-01/" rel="prev" title="Effective Java 读书笔记-01">
+                Effective Java 读书笔记-01 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -608,7 +614,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">35</span>
+                <span class="site-state-item-count">36</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -621,7 +627,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">58</span>
+                <span class="site-state-item-count">60</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
