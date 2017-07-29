@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://micorochio.github.io/fs-plan/index.html</loc>
+    
+    <lastmod>2017-07-29T16:19:42.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://micorochio.github.io/2017/07/28/reading-effective-java-01/</loc>
     
     <lastmod>2017-07-29T16:15:27.000Z</lastmod>
@@ -26,13 +33,6 @@
     <loc>http://micorochio.github.io/2017/05/31/ansible-learning-01/</loc>
     
     <lastmod>2017-06-04T02:55:27.000Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://micorochio.github.io/fs-plan/index.html</loc>
-    
-    <lastmod>2017-05-30T09:52:35.000Z</lastmod>
     
   </url>
   
