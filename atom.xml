@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-07-29T15:56:56.000Z</updated>
+  <updated>2017-07-29T16:15:27.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -20,13 +20,15 @@
     <link href="http://micorochio.github.io/2017/07/28/reading-effective-java-01/"/>
     <id>http://micorochio.github.io/2017/07/28/reading-effective-java-01/</id>
     <published>2017-07-27T23:15:36.000Z</published>
-    <updated>2017-07-29T15:56:56.000Z</updated>
+    <updated>2017-07-29T16:15:27.000Z</updated>
     
     <content type="html"><![CDATA[<p>Thinking in java 太厚了，我不想看，所以先拿EJ开坑。<br>Effective Java 和 Thinking in java都是java基础评分超高的书，所以有必要看一看。<br>Effective Java这本书被java之父推荐，所以特意买了本正版。</p>
 <blockquote>
 <p>我很希望10年前就拥有这本书。可能有人认为我不需要任何Java方面的书籍，但是我需要这本书。<br><br>——Java 之父 James Gosling</p>
 </blockquote>
-<p>当然，这本书是2009年出版的，已经过去N多个年头，所以带着”批判“的眼光来瞻仰这本巨作。</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-b9600d580327741e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>当然，这本书是2009年出版的，已经过去N多个年头，所以带着“批判”的眼光来瞻仰这本巨作。</p>
+<a id="more"></a>
 <p>ps：中文版的翻译真是烂的可以，英文厉害的强烈推荐看英文原版，另外，新手还是先多搬砖，或者去看看java核心技术上下两卷，这本书不适合0基础。</p>
 <h2 id="0x01-静态工厂方法代替构造器"><a href="#0x01-静态工厂方法代替构造器" class="headerlink" title="0x01 静态工厂方法代替构造器"></a>0x01 静态工厂方法代替构造器</h2><p>用静态工厂方法代替构造器有什么好处呢？</p>
 <blockquote>
@@ -79,11 +81,19 @@
 <blockquote>
 <p>总之，除非是作为安全网，或者是为了终止非关键的本地资源，否则请不要使用终结方法。在这些很少见的情况下，既然使用了终结方法，就要记住调用super.finalize。如果终结方法作为安全网，要记得记录终结方法的非法用法。最后，如果需要把终结方法与公有的非final类关联起来，请考虑使用终结方法守卫者，以确保即使子类的终结方法未能调用super.finalize，该终结方法也会被执行。</p>
 </blockquote>
+<p>love &amp; peace</p>
+<p>转载请注明出处：<a href="https://micorochio.github.io/2017/07/28/reading-effective-java-01/">https://micorochio.github.io/2017/07/28/reading-effective-java-01/</a></p>
+<p>如若有误请帮忙指正，谢谢</p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;Thinking in java 太厚了，我不想看，所以先拿EJ开坑。&lt;br&gt;Effective Java 和 Thinking in java都是java基础评分超高的书，所以有必要看一看。&lt;br&gt;Effective Java这本书被java之父推荐，所以特意买了本正版。
+      &lt;p&gt;Thinking in java 太厚了，我不想看，所以先拿EJ开坑。&lt;br&gt;Effective Java 和 Thinking in java都是java基础评分超高的书，所以有必要看一看。&lt;br&gt;Effective Java这本书被java之父推荐，所以特意买了本正版。&lt;/p&gt;
+&lt;blockquote&gt;
+&lt;p&gt;我很希望10年前就拥有这本书。可能有人认为我不需要任何Java方面的书籍，但是我需要这本书。&lt;br&gt;&lt;br&gt;——Java 之父 James Gosling&lt;/p&gt;
+&lt;/blockquote&gt;
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-b9600d580327741e.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
+&lt;p&gt;当然，这本书是2009年出版的，已经过去N多个年头，所以带着“批判”的眼光来瞻仰这本巨作。&lt;/p&gt;
     
     </summary>
     
