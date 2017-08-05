@@ -92,19 +92,19 @@
 
 
 
-<meta name="description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了 0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
+<meta name="description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了   0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
 <meta name="keywords" content="Java,笔记,Java基础">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Effective Java 读书笔记-第三章">
 <meta property="og:url" content="http://micorochio.github.io/2017/08/06/reading-effective-java-02/index.html">
 <meta property="og:site_name" content="Zing">
-<meta property="og:description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了 0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
+<meta property="og:description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了   0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-c5188e903a5f7e47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-08-05T12:16:14.000Z">
+<meta property="og:updated_time" content="2017-08-05T12:25:20.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Effective Java 读书笔记-第三章">
-<meta name="twitter:description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了 0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
+<meta name="twitter:description" content="第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了   0x01 equals方法应该如何写equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。 除非：   类的每个实例都是唯一的 不关心实例是否逻辑上相等 父类已经重写了equals  类是私有的，equals方法永远不会被调用">
 <meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
@@ -413,6 +413,8 @@
 
       
         <p>第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了<br><img src="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="298" height="52" src="//music.163.com/outchain/player?type=2&id=2116504&auto=1&height=32"></iframe>
+
 <h2 id="0x01-equals方法应该如何写"><a href="#0x01-equals方法应该如何写" class="headerlink" title="0x01 equals方法应该如何写"></a>0x01 equals方法应该如何写</h2><p>equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。</p>
 <p>除非：</p>
 <blockquote>
