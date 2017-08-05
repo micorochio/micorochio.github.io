@@ -1099,12 +1099,12 @@
     <link href="http://micorochio.github.io/2017/03/09/basic-of-java-JDBC/"/>
     <id>http://micorochio.github.io/2017/03/09/basic-of-java-JDBC/</id>
     <published>2017-03-09T14:50:13.000Z</published>
-    <updated>2017-03-09T07:21:06.000Z</updated>
+    <updated>2017-08-05T12:28:14.000Z</updated>
     
     <content type="html"><![CDATA[<p>JDBC是Java连接数据库的标准，为了兼容大部分数据库，Java提出了JDBC标准，通过这个标准，让各个数据库提供实现支持，这样实现一处编码，处处运行的Java特性。</p>
 <p>习惯了ORM框架，却忘记了原本的JDBC，所以我觉得有必要复习来夯实一下基础。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1112615-719a927e4839a667.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p><iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width="330" height="86" src="//music.163.com/outchain/player?type=2&id=458031731&auto=1&height=66"></iframe><br><a id="more"></a></p>
+<a id="more"></a>
 <h2 id="0x00-JDBC-历史"><a href="#0x00-JDBC-历史" class="headerlink" title="0x00 JDBC 历史"></a>0x00 JDBC 历史</h2><p>JDBC是Sun公司为了能够让SQL访问统一的一套纯JAVA API设计的一套接口，这种接口是遵循了微软的ODBC API模式。其驱动实现是各家数据库供应商编写的，通过JDBC API可以通过驱动实现数据库通信。</p>
 <h2 id="0x01-链接数据库回顾"><a href="#0x01-链接数据库回顾" class="headerlink" title="0x01 链接数据库回顾"></a>0x01 链接数据库回顾</h2><p>基本Web常用的数据库都是有供Java链接的驱动，</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1112615-d0884440199c9cc7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="三层结构"></p>
@@ -1175,7 +1175,6 @@
       &lt;p&gt;JDBC是Java连接数据库的标准，为了兼容大部分数据库，Java提出了JDBC标准，通过这个标准，让各个数据库提供实现支持，这样实现一处编码，处处运行的Java特性。&lt;/p&gt;
 &lt;p&gt;习惯了ORM框架，却忘记了原本的JDBC，所以我觉得有必要复习来夯实一下基础。&lt;/p&gt;
 &lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-719a927e4839a667.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-&lt;p&gt;&lt;iframe frameborder=&quot;no&quot; border=&quot;0&quot; marginwidth=&quot;0&quot; marginheight=&quot;0&quot; width=&quot;330&quot; height=&quot;86&quot; src=&quot;//music.163.com/outchain/player?type=2&amp;id=458031731&amp;auto=1&amp;height=66&quot;&gt;&lt;/iframe&gt;&lt;br&gt;
     
     </summary>
     
