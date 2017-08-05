@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-07-29T16:15:27.000Z</updated>
+  <updated>2017-08-05T12:09:06.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -14,6 +14,125 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title>Effective Java 读书笔记-第二章</title>
+    <link href="http://micorochio.github.io/2017/08/06/reading-effective-java-02/"/>
+    <id>http://micorochio.github.io/2017/08/06/reading-effective-java-02/</id>
+    <published>2017-08-05T23:15:36.000Z</published>
+    <updated>2017-08-05T12:09:06.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>第三章讲了一些通用的方法。看的时候很快，记笔记的时候满了<br><img src="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>##0x01 equals方法应该如何写<br>equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。</p>
+<p>除非：</p>
+<blockquote>
+<ul>
+<li>类的每个实例都是唯一的</li>
+<li>不关心实例是否逻辑上相等</li>
+<li>父类已经重写了equals </li>
+<li>类是私有的，equals方法永远不会被调用</li>
+</ul>
+</blockquote>
+<p>如果不是以上条件，那就需要考虑对象是不是逻辑相等。那么判断相等的方法就应该具有以下特性：</p>
+<ol>
+<li><strong>reflexive</strong> :  对象自己与自己对比永远是true，<code>x.equals(x)</code> 返回一定是true</li>
+<li><strong>symmetric</strong> : <code>x.equals(y)</code>为true时，<code>y.equals(x)</code>一定为true</li>
+<li><strong>transitive</strong> :   如果 <code>x.equals(y)</code> 为true，且 <code>y.equals(z)</code>也为true，那么<code>x.equals(z)</code> 也必须为true</li>
+<li><strong>consistent</strong> :   如果 <code>x.equals(y)</code> 为true，再x和y没有修改的情况下，无论何时再调用equals方法都会返回true。</li>
+<li>任何对象equals <code>null</code>时，必须返回false<blockquote>
+<p>以上对象全部都是非空对象</p>
+</blockquote>
+</li>
+</ol>
+<p>有了这几个标准，于是就有了写equals方法的公式：</p>
+<ol>
+<li>使用==操作符检查“参数是否为这个对象的引用”。</li>
+<li>使用instanceof操作符检查“参数是否为正确的类型”</li>
+<li>把参数转换成正确的类型。</li>
+<li><p>对于该类中每个“关键（significant）域，检查参数中的域是否与该对象中对应的域相匹配”<br>比较域（类属性参数） 的方法可以参照下下面的代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">(field == o.field || (field != <span class="keyword">null</span> &amp;&amp; field.equals(o.field)))</div></pre></td></tr></table></figure>
+</li>
+<li><p>编写完成了equals方法之后，应该问自己三个问题：它是不是对称的、传递的、一致的</p>
+</li>
+</ol>
+<p>以上是写equals的公式</p>
+<blockquote>
+<p>另外，equals只做比较对象的工作，不要让equals过于智能，且不要将equals声明中的Object对象替换为其他的类型.</p>
+</blockquote>
+<p>##0x02 hashCode方法为什么也要覆写<br>hashCode方法是需要和equals方法一起重新的，在使用HashMap，HashSet这样的散列集合时会大大提升效率</p>
+<p>Object规范里有一段话</p>
+<blockquote>
+<ul>
+<li>在应用程序的执行期间，只要对象的equlas方法的比较操作所用到的信息没有被修改，那么对同一个对象调用多次，hashCode方法都必须始终如一地返回同一个整数。在同一个应用程序的多次执行过程中，每次执行所返回的整数可以不一致。</li>
+<li>如果两个对象根据equlas(Object)方法比较是相等的，那么调用这两个对象中任意一个对象的hashCode方法都必须产生同样的整数结果。</li>
+<li>如果两个对象根据equlas(Object)方法比较是不相等的，那么调用这两个对象中任意一个对象的hashCode方法，则不一定要产生不同的整数结果。但是程序员应该知道，给不相等的对象产生截然不同的整数结果，有可能提高散列表（hash table）的性能。</li>
+</ul>
+</blockquote>
+<p>这段话第二条就明确了，重写equals方法之后就应该连同hashCode方法一起重写。</p>
+<p>举个例子：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">import</span> java.util.HashMap;</div><div class="line"><span class="keyword">import</span> java.util.Map;</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">final</span> <span class="class"><span class="keyword">class</span> <span class="title">PhoneNumber</span> </span>&#123;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> areaCode;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> prefix;</div><div class="line">    <span class="keyword">private</span> <span class="keyword">final</span> <span class="keyword">short</span> lineNumber;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="title">PhoneNumber</span><span class="params">(<span class="keyword">int</span> areaCode, <span class="keyword">int</span> prefix,</span></span></div><div class="line">                       <span class="keyword">int</span> lineNumber) &#123;</div><div class="line">        rangeCheck(areaCode, <span class="number">999</span>, <span class="string">"area code"</span>);</div><div class="line">        rangeCheck(prefix, <span class="number">999</span>, <span class="string">"prefix"</span>);</div><div class="line">        rangeCheck(lineNumber, <span class="number">9999</span>, <span class="string">"line number"</span>);</div><div class="line">        <span class="keyword">this</span>.areaCode = (<span class="keyword">short</span>) areaCode;</div><div class="line">        <span class="keyword">this</span>.prefix = (<span class="keyword">short</span>) prefix;</div><div class="line">        <span class="keyword">this</span>.lineNumber = (<span class="keyword">short</span>) lineNumber;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">rangeCheck</span><span class="params">(<span class="keyword">int</span> arg, <span class="keyword">int</span> max,</span></span></div><div class="line">                                   String name) &#123;</div><div class="line">        <span class="keyword">if</span> (arg &lt; <span class="number">0</span> || arg &gt; max)</div><div class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> IllegalArgumentException(name + <span class="string">": "</span> + arg);</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">equals</span><span class="params">(Object o)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (o == <span class="keyword">this</span>)</div><div class="line">            <span class="keyword">return</span> <span class="keyword">true</span>;</div><div class="line">        <span class="keyword">if</span> (!(o <span class="keyword">instanceof</span> PhoneNumber))</div><div class="line">            <span class="keyword">return</span> <span class="keyword">false</span>;</div><div class="line">        PhoneNumber pn = (PhoneNumber) o;</div><div class="line">        <span class="keyword">return</span> pn.lineNumber == lineNumber</div><div class="line">                &amp;&amp; pn.prefix == prefix</div><div class="line">                &amp;&amp; pn.areaCode == areaCode;</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line"></div><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestHashCode</span> </span>&#123;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Map&lt;String, String&gt; m = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        m.put(<span class="keyword">new</span> String(<span class="string">"HAHA"</span>), <span class="string">"Jenny"</span>);</div><div class="line">        System.out.println(m.get(<span class="keyword">new</span> String(<span class="string">"HAHA"</span>)));</div><div class="line"></div><div class="line">        Map&lt;PhoneNumber, String&gt; s = <span class="keyword">new</span> HashMap&lt;PhoneNumber, String&gt;();</div><div class="line">        s.put(<span class="keyword">new</span> PhoneNumber(<span class="number">707</span>, <span class="number">867</span>, <span class="number">5309</span>), <span class="string">"Jenny"</span>);</div><div class="line">        System.out.println(s.get(<span class="keyword">new</span> PhoneNumber(<span class="number">707</span>, <span class="number">867</span>, <span class="number">5309</span>)));</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>TestHashCode 运行结果如下</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-c5188e903a5f7e47.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>String对象重写了hashCode，所以没啥问题，但是后面就不一样了。<br>很明显两个PhoneNumber实例逻辑是相等的：第一个被用于插入到HashMap中，第二个实例用于（试图用于）获取。由于PhoneNumber类没有覆盖hashCode方法，从而导致两个相等的实例具有不相等的散列码，违反了hashCode的约定。这样，用第二个实例去取Value的时候，现在的hashCode不在HashMap的hash bucket中，没有办法找到存放的value，即使对象明明相等。</p>
+<p>那么如何写hashCode方法呢？<br>最好根据类的关键域（参与equals方法比较的属性）来写，书中给出了这样的建议：</p>
+<blockquote>
+<ol>
+<li>把某个非零的常数值，比如说17，保存在一个名为result的int类型的变量中。</li>
+<li>对于对象中每个关键域f（指equals方法中涉及的每个域），完成以下步骤：</li>
+</ol>
+<ul>
+<li>a. 为该域计算int类型的散列码c:<ul>
+<li>i. 如果该域是boolean类型，则计算(f ? 1 : 0).</li>
+<li>ii. 如果该域是byte、char、short或者int类型，则计算(int)f。</li>
+<li>iii. 如果该域是long类型，则计算(int)(f ^ (f &gt;&gt;&gt; 32))。</li>
+<li>iv. 如果该域是float类型，则计算Float.floatToIntBits(f)。</li>
+<li>v. 如果该域是double类型，则计算Double.doubleToLongBits(f)，然后按照步骤2.a.iii，为得到的long类型值计算散列值。</li>
+<li>vi. 如果该域是一个对象引用，并且该域的equlas方法通过递归地调用equlas的方式来比较这个域，则同样为这个域递归地调用hashCode。如果需要更复杂的比较，则为这个域计算一个“范式（canonical representation）”，然后针对这个范式调用hashCode。如果这个域的值为null，则返回0（或者其他某个常数，但通常是0）。</li>
+<li>vii. 如果该域是一个数组，则要把每一个元素当做单独的域来处理。也就是说，递归地应用上述规则，对每个重要的元素计算一个散列码，然后根据步骤2.b中的做法把这些散列值组合起来。如果数组域中的每个元素都很重要，可以利用发行版本1.5中增加的其中一个Arrays.hashCode方法。</li>
+</ul>
+</li>
+<li>b. 按照下面的公式，把步骤2.a中计算得到的散列码c合并到result中：<br>result = 31 * result + c;</li>
+</ul>
+<ol>
+<li>返回result。</li>
+</ol>
+</blockquote>
+<p>##0x03 toString方法的好处<br>这条不多说了，这个方法可以让类在运行的时候具有更高的可读性，方便调试。</p>
+<p>##0x04 谨慎使用clone方法<br>Object的clone方法是受保护的。如果不借助于反射（reflection）（见第53条），就不能仅仅因为一个对象实现了Cloneable，就可以调用clone方法。<br>而且目前JDK中对clone的约束非常弱。<br>一般情况下，良好的clone方法可以调用构造器来创建对象，构造之后再复制内部数据。如果这个类是final的，clone甚至可能会返回一个由构造器创建的对象。</p>
+<p>Cloneable接口并没有清楚地指明，一个类在实现这个接口时应该承担哪些责任。一个默认调用的是super.clone()，这样不能保证<code>x.clone().getClass() == x.getClass()</code> 返回true了。这不太合逻辑。</p>
+<p>另外，如果对象中的属性是个引用对象，那么Clone出来的东西就可能出现各种问题。操作源对象的属性将会影响克隆对象的属性，结果将是灾难性的。</p>
+<p>另外，也不可以在一个类中的构造函数中使用clone方法。<br>clone方法再线程安全的类中也需要谨慎使用，保证同步。</p>
+<p>因为Cloneable缺陷很多，所以非必要一般不使用。</p>
+<p>##0x05 考虑实现一下Comparable接口<br>实现Comparable就表示类的对象中存在大小先后关系，允许执行顺序比较。实现Comparable接口的对象数组进行排序<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">Arrays.sort(a);</div></pre></td></tr></table></figure></p>
+<p>实现这个接口和重新equals方法有点类似：</p>
+<blockquote>
+<p>符号sgn（表达式）表示数学中的signum函数，它根据表达式（expression）的值为负值、零和正值，分别返回-1、0或1。</p>
+<ul>
+<li>实现者必须确保所有的x和y都满足sgn(x.compareTo(y) == -sgn(y.compareTo(x)))。（这也暗示着，当且仅当y.compareTo(x)抛出异常时，x.compareTo(y)才必须抛出异常。）</li>
+<li>实现者还必须确保这个比较关系是可传递的：x.compareTo(y) &gt; 0 &amp;&amp; y.compareTo(z) &gt; 0暗示着x.compareTo(z) &gt; 0。</li>
+<li>最后，实现者必须确保x.compareTo(y) == 0暗示着所有的z都满足sgn(x.compareTo(z)) == sgn(y.compareTo(z))。</li>
+<li>强烈建议(x.compareTo(y) == 0) == (x.equals(y))，但这并非绝对必要。一般说来，任何实现了Comparable接口的类，若违反了这个条件，都应该明确予以说明。推荐使用这样的说法：“注意，该类具有内在的排序功能，但是与equals不一致。”</li>
+</ul>
+</blockquote>
+<p>另外，注意compareTo方法中最好不要有可能溢出的计算，会导致compareTo方法返回错误的结果</p>
+<p>love &amp; peace</p>
+<p>转载请注明出处：<a href="https://micorochio.github.io/2017/07/28/reading-effective-java-02/">https://micorochio.github.io/2017/07/28/reading-effective-java-02/</a></p>
+<p>如若有误请帮忙指正，谢谢</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;第三章讲了一些通用的方法。看的时候很快，记笔记的时候满了&lt;br&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orie
+    
+    </summary>
+    
+    
+      <category term="Java" scheme="http://micorochio.github.io/tags/Java/"/>
+    
+      <category term="笔记" scheme="http://micorochio.github.io/tags/%E7%AC%94%E8%AE%B0/"/>
+    
+      <category term="Java基础" scheme="http://micorochio.github.io/tags/Java%E5%9F%BA%E7%A1%80/"/>
+    
+  </entry>
   
   <entry>
     <title>Effective Java 读书笔记-第二章</title>
@@ -1592,93 +1711,6 @@
       <category term="jenkins" scheme="http://micorochio.github.io/tags/jenkins/"/>
     
       <category term="NodeJS" scheme="http://micorochio.github.io/tags/NodeJS/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>(笔记备份)CentOS 7 安装与卸载 MySQL 5.7</title>
-    <link href="http://micorochio.github.io/2017/01/16/mark-CentOS-7-install-mysql-5-7/"/>
-    <id>http://micorochio.github.io/2017/01/16/mark-CentOS-7-install-mysql-5-7/</id>
-    <published>2017-01-15T23:13:05.000Z</published>
-    <updated>2017-01-17T13:53:40.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>还挺麻烦的，老折腾了，CentOS 7 用MariaDB代替了MySQL，<br>yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，<br>不过由于服务器在国外，我的小水管4kb/s 安装了十几个小时。</p>
-<h2 id="0x00-先介绍卸载"><a href="#0x00-先介绍卸载" class="headerlink" title="0x00 先介绍卸载"></a>0x00 先介绍卸载</h2><p>防止重装<br></p>
-<ul>
-<li>yum方式</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> #查看yum是否安装过mysql</div><div class="line">yum list installed mysql*</div></pre></td></tr></table></figure>
-<p>如或显示了列表，说明系统中有MySQL<br><img src="http://upload-images.jianshu.io/upload_images/1112615-bba6b2eec0c79a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<a id="more"></a>
-<ul>
-<li>yum卸载</li>
-</ul>
-<p>根据列表上的名字<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">yum remove mysql-community-client mysql-community-common mysql-community-libs mysql-community-libs-compat mysql-community-server mysql57-community-release</div><div class="line">rm -rf /var/lib/mysql  </div><div class="line">rm /etc/my.cnf</div></pre></td></tr></table></figure></p>
-<ul>
-<li>rpm查看安装</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -qa | grep -i mysql</div></pre></td></tr></table></figure>
-<p><img src="http://upload-images.jianshu.io/upload_images/1112615-2a22af8a7764a6e6.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<ul>
-<li>rpm 卸载</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line">rpm -e mysql57-community-release-el7-9.noarch</div><div class="line">rpm -e mysql-community-server-5.7.17-1.el7.x86_64</div><div class="line">rpm -e mysql-community-libs-5.7.17-1.el7.x86_64</div><div class="line">rpm -e mysql-community-libs-compat-5.7.17-1.el7.x86_64</div><div class="line">rpm -e mysql-community-common-5.7.17-1.el7.x86_64</div><div class="line">rpm -e mysql-community-client-5.7.17-1.el7.x86_64</div><div class="line">cd /var/lib/  </div><div class="line">rm -rf mysql/</div></pre></td></tr></table></figure>
-<ul>
-<li>清除余项</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">whereis mysql</div><div class="line">mysql: /usr/bin/mysql /usr/lib64/mysql /usr/local/mysql /usr/share/mysql /usr/share/man/man1/mysql.1.gz</div><div class="line"> # 删除上面的文件夹</div><div class="line">rm -rf /usr/bin/mysql</div><div class="line">…</div><div class="line">…</div></pre></td></tr></table></figure>
-<p>我就省略了</p>
-<ul>
-<li>删除配置</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">rm –rf /usr/my.cnf</div><div class="line">rm -rf /root/.mysql_sercret</div></pre></td></tr></table></figure>
-<p>剩余配置检查<br><br><br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">chkconfig --list | grep -i mysql</div><div class="line">chkconfig --del mysqld</div></pre></td></tr></table></figure></p>
-<p>根据上面的列表，删除 ,如：mysqld</p>
-<h2 id="0x01-再介绍安装"><a href="#0x01-再介绍安装" class="headerlink" title="0x01 再介绍安装"></a>0x01 再介绍安装</h2><ul>
-<li>注意</li>
-</ul>
-<p><em>yum源，阿里的CentOS7.repo是没有的，国外源相当慢，做好心理准备。</em></p>
-<ul>
-<li>下载地址</li>
-</ul>
-<p><a href="http://dev.mysql.com/downloads/" target="_blank" rel="external">http://dev.mysql.com/downloads/</a><br><img src="http://upload-images.jianshu.io/upload_images/1112615-2f064863299d04d2.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="下载页面"></p>
-<p>按照官方的文档进行安装<br><a href="http://dev.mysql.com/doc/refman/5.7/en/installing.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.7/en/installing.html</a><br><img src="http://upload-images.jianshu.io/upload_images/1112615-917573d14e0e88cc.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="http://dev.mysql.com/doc/refman/5.7/en/linux-installation.html"><br>文档地址：<a href="http://dev.mysql.com/doc/refman/5.7/en/linux-installation.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.7/en/linux-installation.html</a><br>3是各种安装方式列表<br>CentOS用yum安装相对省事，省去很多配置环节</p>
-<p>yum安装，先要搞到源<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">wget http://repo.mysql.com/mysql57-community-release-el7-9.noarch.rpm</div><div class="line">sudo rpm -ivh mysql57-community-release-el7-9.noarch.rpm</div></pre></td></tr></table></figure></p>
-<p>接下来使用yum安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">  # 更新yum软件包</div><div class="line">yum check-update  </div><div class="line">  # 更新系统 </div><div class="line">yum update</div><div class="line">  # 安装mysql</div><div class="line">yum install mysql mysql-server</div></pre></td></tr></table></figure>
-<p>接下来是漫长的等待。如果中途关机，或者下载挂了，请执行卸载步骤后，再来一次。</p>
-<p>完成后</p>
-<p>记住要给root上密码<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">/usr/local/mysql/bin/mysqld_safe --skip-grant-tables --user=mysql &amp;</div><div class="line">systemctl start mysqld</div><div class="line">mysql -u root</div><div class="line">mysql&gt; update mysql.user set authentication_string=password(&apos;new_password&apos;) where user=&apos;root&apos; and Host =&apos;localhost&apos;;</div><div class="line">mysql&gt; flush privileges;</div><div class="line">mysql&gt; quit;</div></pre></td></tr></table></figure></p>
-<ul>
-<li>启动与开放远程访问</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">systemctl start mysqld</div><div class="line">mysql -u root -p</div><div class="line"> # 授权远程访问</div><div class="line">mysql&gt; use mysql;</div><div class="line">mysql&gt; rant all privileges  on *.* to root@&apos;%&apos; identified by &quot;root&quot;;</div><div class="line">mysql&gt; FLUSH RIVILEGES;</div></pre></td></tr></table></figure>
-<p>建议root不要授权远程访问，请创建新mysql用户</p>
-<h2 id="0x02-编译安装"><a href="#0x02-编译安装" class="headerlink" title="0x02 编译安装"></a>0x02 编译安装</h2><p>这个略坑，我按照官方文档安装，安好了不会配置，唉，吐槽自己太菜！导致没启动成功，后来换成了yum安装<br><a href="http://dev.mysql.com/doc/refman/5.7/en/installing-source-distribution.html" target="_blank" rel="external">http://dev.mysql.com/doc/refman/5.7/en/installing-source-distribution.html</a><br>我还是要把脚本贴出来<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"> # 添加mysql用户</div><div class="line">shell&gt; groupadd mysql</div><div class="line">shell&gt; useradd -r -g mysql -s /bin/false mysql</div><div class="line">shell&gt; rpmbuild --rebuild --clean MySQL-VERSION.src.rpm</div><div class="line"> # 源码编译安装</div><div class="line">shell&gt; tar zxvf mysql-VERSION.tar.gz</div><div class="line">shell&gt; cd mysql-VERSION</div><div class="line">shell&gt; mkdir build</div><div class="line">shell&gt; cd build</div><div class="line">shell&gt; cmake ..</div><div class="line">shell&gt; make</div><div class="line">shell&gt; make install</div><div class="line"> # 结束 source-build specific instructions</div><div class="line"> # 权限步骤</div><div class="line">shell&gt; cd /usr/local/mysql</div><div class="line">shell&gt; chown -R mysql .</div><div class="line">shell&gt; chgrp -R mysql .</div><div class="line">shell&gt; bin/mysql_install_db --user=mysql    # MySQL 5.7.6执行</div><div class="line">shell&gt; bin/mysqld --initialize --user=mysql # MySQL 5.7.6 更高版本执行</div><div class="line">shell&gt; bin/mysql_ssl_rsa_setup              # MySQL 5.7.6 更高版本执行</div><div class="line">shell&gt; chown -R root .</div><div class="line">shell&gt; chown -R mysql data</div><div class="line">shell&gt; bin/mysqld_safe --user=mysql &amp;</div><div class="line"> # 配置命令</div><div class="line">shell&gt; cp support-files/mysql.server /etc/init.d/mysql.server</div></pre></td></tr></table></figure></p>
-<p>大致是以上的安装脚本，官网上有详细解释每一条的作用。可以参照一下。如果安装失败，可以参照最上面的卸载教程。<br>祝你好运。</p>
-<h2 id="0x03-参考"><a href="#0x03-参考" class="headerlink" title="0x03 参考"></a>0x03 参考</h2><p><a href="http://dev.mysql.com/doc/" target="_blank" rel="external">http://dev.mysql.com/doc/</a><br><a href="http://blog.csdn.net/typa01_kk/article/details/49057073" target="_blank" rel="external">http://blog.csdn.net/typa01_kk/article/details/49057073</a></p>
-<hr>
-<p>*如果有错别字或者其他错误，请告知我修改。<br>转载请务必注明出处！</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;还挺麻烦的，老折腾了，CentOS 7 用MariaDB代替了MySQL，&lt;br&gt;yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，&lt;br&gt;不过由于服务器在国外，我的小水管4kb/s 安装了十几个小时。&lt;/p&gt;
-&lt;h2 id=&quot;0x00-先介绍卸载&quot;&gt;&lt;a href=&quot;#0x00-先介绍卸载&quot; class=&quot;headerlink&quot; title=&quot;0x00 先介绍卸载&quot;&gt;&lt;/a&gt;0x00 先介绍卸载&lt;/h2&gt;&lt;p&gt;防止重装&lt;br&gt;&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;yum方式&lt;/li&gt;
-&lt;/ul&gt;
-&lt;figure class=&quot;highlight plain&quot;&gt;&lt;table&gt;&lt;tr&gt;&lt;td class=&quot;gutter&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt;1&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;2&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;td class=&quot;code&quot;&gt;&lt;pre&gt;&lt;div class=&quot;line&quot;&gt; #查看yum是否安装过mysql&lt;/div&gt;&lt;div class=&quot;line&quot;&gt;yum list installed mysql*&lt;/div&gt;&lt;/pre&gt;&lt;/td&gt;&lt;/tr&gt;&lt;/table&gt;&lt;/figure&gt;
-&lt;p&gt;如或显示了列表，说明系统中有MySQL&lt;br&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-bba6b2eec0c79a1f.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Linux" scheme="http://micorochio.github.io/tags/Linux/"/>
-    
-      <category term="mysql" scheme="http://micorochio.github.io/tags/mysql/"/>
-    
-      <category term="CentOS" scheme="http://micorochio.github.io/tags/CentOS/"/>
     
   </entry>
   
