@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-08-05T12:10:03.000Z</updated>
+  <updated>2017-08-05T12:15:36.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -16,14 +16,14 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Effective Java 读书笔记-第二章</title>
+    <title>Effective Java 读书笔记-第三章</title>
     <link href="http://micorochio.github.io/2017/08/06/reading-effective-java-02/"/>
     <id>http://micorochio.github.io/2017/08/06/reading-effective-java-02/</id>
     <published>2017-08-05T23:15:36.000Z</published>
-    <updated>2017-08-05T12:10:03.000Z</updated>
+    <updated>2017-08-05T12:15:36.000Z</updated>
     
     <content type="html"><![CDATA[<p>第三章讲了一些通用的方法。看的时候很快，记笔记的时候慢了<br><img src="http://upload-images.jianshu.io/upload_images/1112615-7341f62f8111e454.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
-<p>##0x01 equals方法应该如何写<br>equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。</p>
+<h2 id="0x01-equals方法应该如何写"><a href="#0x01-equals方法应该如何写" class="headerlink" title="0x01 equals方法应该如何写"></a>0x01 equals方法应该如何写</h2><p>equals 方法是对象判断是否相等的方法，如果一个类具有多实例的需求时，可以重equals方法来判断两个对象是否相等。</p>
 <p>除非：</p>
 <blockquote>
 <ul>
@@ -59,7 +59,7 @@
 <blockquote>
 <p>另外，equals只做比较对象的工作，不要让equals过于智能，且不要将equals声明中的Object对象替换为其他的类型.</p>
 </blockquote>
-<p>##0x02 hashCode方法为什么也要覆写<br>hashCode方法是需要和equals方法一起重新的，在使用HashMap，HashSet这样的散列集合时会大大提升效率</p>
+<h2 id="0x02-hashCode方法为什么也要覆写"><a href="#0x02-hashCode方法为什么也要覆写" class="headerlink" title="0x02 hashCode方法为什么也要覆写"></a>0x02 hashCode方法为什么也要覆写</h2><p>hashCode方法是需要和equals方法一起重新的，在使用HashMap，HashSet这样的散列集合时会大大提升效率</p>
 <p>Object规范里有一段话</p>
 <blockquote>
 <ul>
@@ -96,8 +96,8 @@
 <li>返回result。</li>
 </ol>
 </blockquote>
-<p>##0x03 toString方法的好处<br>这条不多说了，这个方法可以让类在运行的时候具有更高的可读性，方便调试。</p>
-<p>##0x04 谨慎使用clone方法<br>Object的clone方法是受保护的。如果不借助于反射（reflection）（见第53条），就不能仅仅因为一个对象实现了Cloneable，就可以调用clone方法。<br>而且目前JDK中对clone的约束非常弱。<br>一般情况下，良好的clone方法可以调用构造器来创建对象，构造之后再复制内部数据。如果这个类是final的，clone甚至可能会返回一个由构造器创建的对象。</p>
+<h2 id="0x03-toString方法的好处"><a href="#0x03-toString方法的好处" class="headerlink" title="0x03 toString方法的好处"></a>0x03 toString方法的好处</h2><p>这条不多说了，这个方法可以让类在运行的时候具有更高的可读性，方便调试。</p>
+<h2 id="0x04-谨慎使用clone方法"><a href="#0x04-谨慎使用clone方法" class="headerlink" title="0x04 谨慎使用clone方法"></a>0x04 谨慎使用clone方法</h2><p>Object的clone方法是受保护的。如果不借助于反射（reflection）（见第53条），就不能仅仅因为一个对象实现了Cloneable，就可以调用clone方法。<br>而且目前JDK中对clone的约束非常弱。<br>一般情况下，良好的clone方法可以调用构造器来创建对象，构造之后再复制内部数据。如果这个类是final的，clone甚至可能会返回一个由构造器创建的对象。</p>
 <p>Cloneable接口并没有清楚地指明，一个类在实现这个接口时应该承担哪些责任。一个默认调用的是super.clone()，这样不能保证<code>x.clone().getClass() == x.getClass()</code> 返回true了。这不太合逻辑。</p>
 <p>另外，如果对象中的属性是个引用对象，那么Clone出来的东西就可能出现各种问题。操作源对象的属性将会影响克隆对象的属性，结果将是灾难性的。</p>
 <p>另外，也不可以在一个类中的构造函数中使用clone方法。<br>clone方法再线程安全的类中也需要谨慎使用，保证同步。</p>
@@ -115,7 +115,7 @@
 </blockquote>
 <p>另外，注意compareTo方法中最好不要有可能溢出的计算，会导致compareTo方法返回错误的结果</p>
 <p>love &amp; peace</p>
-<p>转载请注明出处：<a href="https://micorochio.github.io/2017/07/28/reading-effective-java-02/">https://micorochio.github.io/2017/07/28/reading-effective-java-02/</a></p>
+<p>转载请注明出处：<a href="https://micorochio.github.io/2017/08/06/reading-effective-java-02/">https://micorochio.github.io/2017/08/06/reading-effective-java-02/</a></p>
 <p>如若有误请帮忙指正，谢谢</p>
 ]]></content>
     
