@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-11-11T16:34:54.000Z</updated>
+  <updated>2017-11-11T17:11:38.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -20,9 +20,10 @@
     <link href="http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/"/>
     <id>http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/</id>
     <published>2017-11-11T16:32:44.000Z</published>
-    <updated>2017-11-11T16:34:54.000Z</updated>
+    <updated>2017-11-11T17:11:38.000Z</updated>
     
-    <content type="html"><![CDATA[<p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
+    <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
 <h2 id="0x01-内存模型图的思维转换"><a href="#0x01-内存模型图的思维转换" class="headerlink" title="0x01 内存模型图的思维转换"></a>0x01 内存模型图的思维转换</h2><p><img src="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。</p>
 <p>笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。</p>
@@ -83,12 +84,12 @@
 </blockquote>
 <p>如果想亲自试一试，可以看看：<a href="https://my.oschina.net/u/1047640/blog/510397" target="_blank" rel="external">证明32位java对long和double的写操作不是原子性的</a></p>
 <p>0x04 总结<br>以上只是对内存结构和部分读写规则的总结笔记，线程是java必过的硬指标，后面再更新新的学习笔记。</p>
+<p>by：zing<br>转载请注明出处：<a href="https://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/">https://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/</a></p>
 ]]></content>
     
     <summary type="html">
     
-      &lt;p&gt;知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。&lt;/p&gt;
-&lt;h2 id=&quot;0x01-内存模型图的思维转换&quot;&gt;&lt;a href=&quot;#0x01-内存模型图的思维转换&quot; class=&quot;headerlink&quot; title=&quot;0x01 
+      &lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; 
     
     </summary>
     

@@ -92,20 +92,21 @@
 
 
 
-<meta name="description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变成">
+<meta name="description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zing">
 <meta property="og:url" content="http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/index.html">
 <meta property="og:site_name" content="Zing">
-<meta property="og:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变成">
+<meta property="og:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-ddfdd6dce25a2f0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-428914974fcf30ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-11T16:34:54.000Z">
+<meta property="og:updated_time" content="2017-11-11T17:11:38.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zing">
-<meta name="twitter:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变成">
-<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta name="twitter:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -412,7 +413,8 @@
       
 
       
-        <p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
+        <p><img src="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
 <h2 id="0x01-内存模型图的思维转换"><a href="#0x01-内存模型图的思维转换" class="headerlink" title="0x01 内存模型图的思维转换"></a>0x01 内存模型图的思维转换</h2><p><img src="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。</p>
 <p>笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。</p>
@@ -473,6 +475,7 @@
 </blockquote>
 <p>如果想亲自试一试，可以看看：<a href="https://my.oschina.net/u/1047640/blog/510397" target="_blank" rel="external">证明32位java对long和double的写操作不是原子性的</a></p>
 <p>0x04 总结<br>以上只是对内存结构和部分读写规则的总结笔记，线程是java必过的硬指标，后面再更新新的学习笔记。</p>
+<p>by：zing<br>转载请注明出处：<a href="https://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/">https://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/</a></p>
 
       
     </div>
