@@ -2,6 +2,13 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/</loc>
+    
+    <lastmod>2017-11-11T16:34:54.000Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://micorochio.github.io/2017/08/07/reading-effective-java-03/</loc>
     
     <lastmod>2017-10-03T16:21:41.000Z</lastmod>

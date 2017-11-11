@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-10-03T16:21:41.000Z</updated>
+  <updated>2017-11-11T16:34:54.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -14,6 +14,86 @@
   </author>
   
   <generator uri="http://hexo.io/">Hexo</generator>
+  
+  <entry>
+    <title></title>
+    <link href="http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/"/>
+    <id>http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/</id>
+    <published>2017-11-11T16:32:44.000Z</published>
+    <updated>2017-11-11T16:34:54.000Z</updated>
+    
+    <content type="html"><![CDATA[<p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
+<h2 id="0x01-内存模型图的思维转换"><a href="#0x01-内存模型图的思维转换" class="headerlink" title="0x01 内存模型图的思维转换"></a>0x01 内存模型图的思维转换</h2><p><img src="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。</p>
+<p>笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。</p>
+<p>但是如果从线程的角度，内存模型会变成下图的样子</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-ddfdd6dce25a2f0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="线程内存模型"></p>
+<p>在这个模型中，变量是在主内存中的，线程各自有各自的工作内存，不会出现相互干扰。</p>
+<p>工作内存通过跟主内存之间的操作，实现变量数据的交换共享。而线程工作内存是相互隔离的。这样各线程工作的时候不会对其他线程的工作数据产生影响</p>
+<h2 id="0x02-工作内存和主内存之间的操作（单个线程）"><a href="#0x02-工作内存和主内存之间的操作（单个线程）" class="headerlink" title="0x02 工作内存和主内存之间的操作（单个线程）"></a>0x02 工作内存和主内存之间的操作（单个线程）</h2><p>两块内存有8种操作。</p>
+<ol>
+<li><strong>（lock - unlock）</strong> lock将一个主内存变量标记成线程独占，unlock将独占的变量释放</li>
+<li><strong>（read - load）</strong>read 将主内存的变量读取到CPU中，load操作将read到的变量存入到工作内存中,一定会成对出现</li>
+<li><strong>（use - assign）</strong> use将工作内存中的变量传递给执行的代码中，当代码需要使用变量值的字节码时，需要这个操作。 assign 赋值操作，将代码中赋值指令出现时，把收到的变量赋值到工作内存中</li>
+<li><strong>(store - write)</strong>  store 将工作内存的变量传送回主内存，但是只是传送，write操作才会将值写入到主内存。而且这两个一定会成对出现</li>
+</ol>
+<blockquote>
+<ul>
+<li>read load ; store write只能成对操作，不能出现只读不用，只返回不存储 </li>
+<li>不允许线程丢弃assign操作，用完的变量一定会传回主内存，也不允许将未assign的变量从工作内存写回主内存</li>
+<li>变量只能从主内存中创建，未初始化的变量线程不能load 或 assign</li>
+<li>变量只能被一条线程lock，而且可以lock很多次，必须执行相应条数的unlock才会被释放</li>
+<li>线程只能unlock自己lock的变量，未被lock的变量不能执行unlock，不允许unlock其他线程lock的变量</li>
+<li>lock变量操作会将工作内存的变量清空，使用这个变量时，相应使用这个变量时，需要重新load 和assign</li>
+<li>unlock 前，变量会被重新写入主内存</li>
+</ul>
+</blockquote>
+<p>正如上面4条说明，每两对操作基本都是对应的，成对出现的。（不是绝对）</p>
+<h2 id="0x03-特殊的内存操作"><a href="#0x03-特殊的内存操作" class="headerlink" title="0x03 特殊的内存操作"></a>0x03 特殊的内存操作</h2><p>下面说一下特例情况</p>
+<p>###synchronized对内存可见性的影响<br>首先synchronized关键字在线程同步上，安全性几乎是万能的，导致被滥用的一塌糊涂。<br>其次synchronized关键字保证了两条线程遵循happens-before的设计原则，两个线程必须一先一后执行。</p>
+<blockquote>
+<pre><code>它会阻止其它线程获取当前对象锁，这样就使得当前对象中被synchronized关键字保护的代码块无法被其它线程访问，也就无法并发执行。
+</code></pre><p><a href="http://blog.csdn.net/suifeng3051/article/details/52611233" target="_blank" rel="external">volatile和synchronized的区别</a></p>
+</blockquote>
+<p>最后synchronized关键字对内存的影响是，当一个线程从一个synchronized块出来时，内存一定会刷新成最新的数据，保证变量的可见性。</p>
+<h3 id="接着是volatile关键字"><a href="#接着是volatile关键字" class="headerlink" title="接着是volatile关键字"></a>接着是volatile关键字</h3><p>volatile 修饰的变量。面试容易被问，因为大家喜欢用synchronized 来进行同步，忽略了了volatile这个关键字</p>
+<p>那么他们的区别是什么？<br><strong>“可见性”！</strong>但是一定要记住，这里的可见性不是绝对的立即可见，虽然volatile变量会将变量的变化及时的反应到其他线程的工作内存中去，但是并不表示被修饰的变量在各线程中会一致，只是使用的时候会被刷新，所以执行引擎不会发现不一致的情况，而实际上，被修饰的变量也会有不同的工作内存中值不一致的情况</p>
+<p>volatile 关键字只能保证线程取值的时候，是一致的，等取到工作内存中进行操作时，如果变量被其他线程存回去的话，这时候工作内存的变量就会出现不一致。<br>下面一段代码会出现比预期值小的情况<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">public</span> <span class="class"><span class="keyword">class</span> <span class="title">TestVolatail</span> </span>&#123;</div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">volatile</span> <span class="keyword">int</span> added = <span class="number">0</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">increase</span><span class="params">()</span> </span>&#123;</div><div class="line">        added++;<span class="comment">//++ 操作是先取出来，然后再加一，如果想线程安全，试试juc里面的atomic包下的类</span></div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> ADD_ACCOUNTER = <span class="number">10</span>;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title">main</span><span class="params">(String[] args)</span> </span>&#123;</div><div class="line">        Thread t[] = <span class="keyword">new</span> Thread[ADD_ACCOUNTER];</div><div class="line">        <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">0</span>; i &lt; ADD_ACCOUNTER; i++) &#123;</div><div class="line">            t[i] = <span class="keyword">new</span> Thread(() -&gt; &#123;</div><div class="line">                <span class="keyword">for</span> (<span class="keyword">int</span> m = <span class="number">0</span>; m &lt; <span class="number">10000</span>; m++) &#123;</div><div class="line">                    increase();</div><div class="line">                &#125;</div><div class="line">            &#125;);</div><div class="line">            t[i].start();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">while</span> (Thread.activeCount() &gt; <span class="number">1</span>) &#123;</div><div class="line">            Thread.yield();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        System.out.println(<span class="string">"最终累加值："</span> + added);</div><div class="line">    &#125;</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>输出结果：</p>
+<p><img src="http://upload-images.jianshu.io/upload_images/1112615-428914974fcf30ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<p>10个线程，每个对变量做10000次累加，并不是100000，变小了是因为某些线程正在累加的时候，新的较小的值已经覆盖了正在使用的变量，别的线程来取会以这个较小的值为准。</p>
+<blockquote>
+<p><strong>所以volatile只能保证可见性，不能保证一致性</strong></p>
+<p>面试的时候最好提一下volatile会禁止jvm做指令重排序，java1.5之后才变成这样的，本篇暂且不表，坑后面再填</p>
+</blockquote>
+<h3 id="long-和-double的特殊性"><a href="#long-和-double的特殊性" class="headerlink" title="long 和 double的特殊性"></a>long 和 double的特殊性</h3><p>首先 long 和 double是64位的，这一点是毋庸置疑的。</p>
+<p>所以上述8种操作，在面对long类型和double类型的时候，有4种操作<code>read load  store write</code>是需要连续执行两次的。虽然JVM中，虽然是允许读取64位数据不是原子操作，但是在商用的JVM中，这些操作都是原子的</p>
+<p>而且JVM规范里，强烈“建议”将读取和存放 64位数据的操作做成原子操作的。所以……<br>另外，多核心处理器中的同一个变量缓存也不是及时同步的，即使有个byte，使用时也会加锁。</p>
+<p><strong><em>附上JVM规范和R大在知乎上的回答：</em></strong></p>
+<blockquote>
+<p><a href="https://docs.oracle.com/javase/specs/jls/se8/html/jls-17.html#jls-17.7" target="_blank" rel="external">JVM规范：17.7. Non-atomic Treatment of double and long</a></p>
+<p>R大的回答截取：   <em>简单说就是规范说的是：</em></p>
+<blockquote>
+<ul>
+<li>实现对普通long与double的读写不要求是原子的（但如果实现为原子操作也OK）</li>
+<li>实现对volatile long与volatile double的读写必须是原子的（没有选择余地）</li>
+</ul>
+</blockquote>
+<p>(<em>64位JVM的long和double读写也不是原子操作么？ - RednaxelaFX的回答 - 知乎<br><a href="https://www.zhihu.com/question/38816432/answer/78944479" target="_blank" rel="external">https://www.zhihu.com/question/38816432/answer/78944479</a></em>)</p>
+</blockquote>
+<p>如果想亲自试一试，可以看看：<a href="https://my.oschina.net/u/1047640/blog/510397" target="_blank" rel="external">证明32位java对long和double的写操作不是原子性的</a></p>
+<p>0x04 总结<br>以上只是对内存结构和部分读写规则的总结笔记，线程是java必过的硬指标，后面再更新新的学习笔记。</p>
+]]></content>
+    
+    <summary type="html">
+    
+      &lt;p&gt;知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。&lt;/p&gt;
+&lt;h2 id=&quot;0x01-内存模型图的思维转换&quot;&gt;&lt;a href=&quot;#0x01-内存模型图的思维转换&quot; class=&quot;headerlink&quot; title=&quot;0x01 
+    
+    </summary>
+    
+    
+  </entry>
   
   <entry>
     <title>Effective Java 读书笔记-第四章</title>
@@ -1695,178 +1775,6 @@
       <category term="函数式编程" scheme="http://micorochio.github.io/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E7%BC%96%E7%A8%8B/"/>
     
       <category term="函数式接口" scheme="http://micorochio.github.io/tags/%E5%87%BD%E6%95%B0%E5%BC%8F%E6%8E%A5%E5%8F%A3/"/>
-    
-  </entry>
-  
-  <entry>
-    <title>CentOS7 搭建Java Web服务器笔记</title>
-    <link href="http://micorochio.github.io/2017/01/20/mark-CentOS-7-Java-Web-Server-building/"/>
-    <id>http://micorochio.github.io/2017/01/20/mark-CentOS-7-Java-Web-Server-building/</id>
-    <published>2017-01-19T17:53:01.000Z</published>
-    <updated>2017-01-23T08:38:19.000Z</updated>
-    
-    <content type="html"><![CDATA[<p>搭建Java服务器就是把JavaEE的Web部署环境和软件都安装好，这是我自己用旧的PC搭建的，所以只是单个服务器，不涉及分布式。这些安装步骤都可以单独找教程</p>
-<h2 id="0x00-前言"><a href="#0x00-前言" class="headerlink" title="0x00 前言"></a>0x00 前言</h2><blockquote>
-<ul>
-<li>gcc gcc-c++</li>
-<li>JDK</li>
-<li>Redis</li>
-<li>Nginx</li>
-<li>MySQL</li>
-<li>NodeJS</li>
-<li>Jenkins</li>
-</ul>
-</blockquote>
-<p>可能需要的附加软件</p>
-<ul>
-<li>git</li>
-<li>Python</li>
-<li><p>Python pip<br>…</p>
-<a id="more"></a>
-<h2 id="0x01-JDK安装和配置"><a href="#0x01-JDK安装和配置" class="headerlink" title="0x01 JDK安装和配置"></a>0x01 JDK安装和配置</h2><p>其实CentOS 7 自带Java7 为了适应lambda ，更新到Java8</p>
-</li>
-<li><p>卸载之前的版本</p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]#  rpm -qa | grep java</div><div class="line">javapackages-tools-3.4.1-6.el7_0.noarch</div><div class="line">tzdata-java-2014i-1.el7.noarch</div><div class="line">java-1.7.0-openjdk-headless-1.7.0.71-2.5.3.1.el7_0.x86_64</div><div class="line">java-1.7.0-openjdk-1.7.0.71-2.5.3.1.el7_0.x86_64</div><div class="line">python-javapackages-3.4.1-6.el7_0.noarch</div></pre></td></tr></table></figure>
-<p>根据列表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# rpm -e --nodeps tzdata-java-2014i-1.el7.noarch</div><div class="line">[root@localhost ~]# rpm -e --nodeps java-1.7.0-openjdk-headless-1.7.0.71-2.5.3.1.el7_0.x86_64</div><div class="line">[root@localhost ~]# rpm -e --nodeps java-1.7.0-openjdk-1.7.0.71-2.5.3.1.el7_0.x86_64</div></pre></td></tr></table></figure></p>
-<ul>
-<li>下载JDK包</li>
-</ul>
-<p><a href="http://www.oracle.com/technetwork/java/javase/downloads/index.html" target="_blank" rel="external">下载地址：http://www.oracle.com/technetwork/java/javase/downloads/index.html</a></p>
-<p>因为Oracle搞了cookie验证，所以下载完使用ftp上传到CentOS上也可以，或者，wget带上Cookie<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">wget --no-cookies --no-check-certificate --header &quot;Cookie: gpw_e24=http%3A%2F%2Fwww.oracle.com%2F; oraclelicense=accept-securebackup-cookie&quot; &quot;http://download.oracle.com/otn-pub/java/jdk/8u102-b14/jdk-8u102-linux-i586.rpm&quot;</div></pre></td></tr></table></figure></p>
-<ul>
-<li>安装rpm</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">rpm -ivh jdk-8u102-linux-i586.rpm</div></pre></td></tr></table></figure>
-<ul>
-<li>配置JAVA_HOME</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line">vi /etc/profile</div><div class="line"># 最末尾添加</div><div class="line">JAVA_HOME=/usr/local/jdk/jdk1.8.0_91</div><div class="line">JRE_HOME=$JAVA_HOME/jre</div><div class="line">PATH=$PATH:$JAVA_HOME/bin:$JRE_HOME/bin</div><div class="line">CLASSPATH=:$JAVA_HOME/lib/dt.jar:$JAVA_HOME/lib/tools.jar:$JRE_HOME/lib/dt.jar</div><div class="line">export JAVA_HOME JRE_HOME PATH CLASSPATH</div></pre></td></tr></table></figure>
-<p>保存 退出vi<br><figure class="highlight shell"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="meta">#</span><span class="bash"> 使环境变量生效</span></div><div class="line">source /etc/profile</div></pre></td></tr></table></figure></p>
-<ul>
-<li>验证安装成功</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">[root@localhost ~]# java -version</div><div class="line">java version &quot;1.8.0_92&quot;</div><div class="line">Java(TM) SE Runtime Environment (build 1.8.0_92-b14)</div><div class="line">Java HotSpot(TM) 64-Bit Server VM (build 25.92-b14, mixed mode)</div></pre></td></tr></table></figure>
-<h2 id="0x02-安装Redis"><a href="#0x02-安装Redis" class="headerlink" title="0x02 安装Redis"></a>0x02 安装Redis</h2><p>因为Redis不大，可以使用yum工具安装</p>
-<ul>
-<li>yum 安装</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"># 系统应该安装了EPEL</div><div class="line">sudo yum -y install redis</div></pre></td></tr></table></figure>
-<p>如果不行</p>
-<ul>
-<li>编译安装</li>
-</ul>
-<p><a href="https://linux.cn/article-6719-1.html" target="_blank" rel="external">参考这篇文章：https://linux.cn/article-6719-1.html</a></p>
-<ul>
-<li>Redis 相关操作</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"> # 启动服务：</div><div class="line"> systemctl start redis.service</div><div class="line"> # 停止服务：</div><div class="line">systemctl stop redis.service</div><div class="line"> # 重启服务：</div><div class="line">systemctl restart redis.service</div></pre></td></tr></table></figure>
-<ul>
-<li><a href="https://redis.io/" target="_blank" rel="external">Redis官网：https://redis.io/</a></li>
-</ul>
-<h2 id="0x03-安装Nginx"><a href="#0x03-安装Nginx" class="headerlink" title="0x03 安装Nginx"></a>0x03 安装Nginx</h2><ul>
-<li>yum 安装</li>
-</ul>
-<p>如果不是网络被限制的话，建议用这个方法安装<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo yum install nginx</div></pre></td></tr></table></figure></p>
-<ul>
-<li><p>编译安装<br></p>
-</li>
-<li><p>检查依赖<br></p>
-</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">rpm -q gcc</div><div class="line">rpm -q openssl</div><div class="line">rpm -q zlib</div><div class="line">rpm -q pcre</div></pre></td></tr></table></figure>
-<p><code>package pcre is not installed</code>表示pcre未被安装，否则表示该项依赖已被安装<br></p>
-<ul>
-<li>安装依赖<br><br>选择没有安装的依赖，yum安装<br></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line"> # 建议使用root用户</div><div class="line">yum install -y gcc gcc-c++</div><div class="line">yum -y install openssl</div><div class="line">yum -y install zlib</div><div class="line">yum -y install pcre</div></pre></td></tr></table></figure>
-<ul>
-<li>创建目录，安装Nginx<br></li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line"># 请使用root或管理员用户</div><div class="line"># 创建安装目录</div><div class="line">cd /</div><div class="line">mkdir appHome</div><div class="line">cd appHome</div><div class="line"># 下载Nginx，解压</div><div class="line">wget http://nginx.org/download/nginx-1.11.8.tar.gz</div><div class="line">tar zxvf nginx-1.9.15.tar.gz</div><div class="line">cd nginx-1.9.15</div><div class="line"># 编译安装</div><div class="line">./configure</div><div class="line">make </div><div class="line">make install</div></pre></td></tr></table></figure>
-<ul>
-<li>启动Ngixn<br><br>如果是yum安装</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo systemctl start nginx</div></pre></td></tr></table></figure>
-<p>如果是编译安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">cd /usr/local/nginx/bin</div><div class="line">sudo  ./nginx</div></pre></td></tr></table></figure>
-<p>记得打开端口</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"> # 查看端口是否开放</div><div class="line">firewall-cmd --list-all</div></pre></td></tr></table></figure>
-<p>建议开放非80端口，修改一下Nginx配置，开80端口可能被查水表<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># 打开80端口</div><div class="line">firewall-cmd --zone=public --add-port=80/tcp --permanent</div><div class="line">firewall-cmd --zone=public --add-service=http --permanent</div><div class="line">firewall-cmd --reload</div></pre></td></tr></table></figure></p>
-<h2 id="0x04-安装MySQL"><a href="#0x04-安装MySQL" class="headerlink" title="0x04 安装MySQL"></a>0x04 安装MySQL</h2><p>这个老折腾了，CentOS 7 用MariaDB代替了MySQL，yum源里也没有MySQL，只能去Mysql官网去找源，这次用的是rpm安装，不过由于服务器在国外，我的小水管4kb/s 安装了10个小时，所以我弄了个新笔记<br><a href="http://www.jianshu.com/p/e54ff5283f18" target="_blank" rel="external">CentOS 7 安装与卸载MySQL 5.7跳坑：http://www.jianshu.com/p/e54ff5283f18</a></p>
-<h2 id="0x05-安装NodeJS"><a href="#0x05-安装NodeJS" class="headerlink" title="0x05 安装NodeJS"></a>0x05 安装NodeJS</h2><p>下载安装并配置</p>
-<ul>
-<li><p>下载解压</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">cd /appHome/</div><div class="line">wget https://nodejs.org/dist/v6.9.4/node-v6.9.4-linux-x64.tar.xz</div><div class="line">tar -zxvf node-v6.9.4-linux-x64.tar.xz</div></pre></td></tr></table></figure>
-</li>
-<li><p>安装</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">cd node-v6.9.4-linux-x64</div><div class="line">./configure </div><div class="line">make </div><div class="line">make install</div></pre></td></tr></table></figure>
-</li>
-<li><p>添加配置</p>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">vi /etc/profile</div></pre></td></tr></table></figure>
-</li>
-</ul>
-<p>末尾添加<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"># NODE_HOME</div><div class="line">NODE_HOME =/appHome/node-v6.9.4-linux-x64</div><div class="line"> PATH=$PATH:$NODE_HOME/bin</div><div class="line">export PATH NODE_HOME</div></pre></td></tr></table></figure></p>
-<p>保存，编译<br><figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">source /etc/profile</div></pre></td></tr></table></figure></p>
-<h2 id="0x06-安装Jenkins"><a href="#0x06-安装Jenkins" class="headerlink" title="0x06 安装Jenkins"></a>0x06 安装Jenkins</h2><p>超级简单<br><a href="https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Red+Hat+distributions" target="_blank" rel="external">https://wiki.jenkins-ci.org/display/JENKINS/Installing+Jenkins+on+Red+Hat+distributions</a></p>
-<p>我贴一下脚本</p>
-<ul>
-<li>安装</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line">sudo wget -O /etc/yum.repos.d/jenkins.repo http://pkg.jenkins-ci.org/redhat-stable/jenkins.repo</div><div class="line">sudo rpm --import https://jenkins-ci.org/redhat/jenkins-ci.org.key</div><div class="line">sudo yum install jenkins</div></pre></td></tr></table></figure>
-<ul>
-<li>操作</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div></pre></td><td class="code"><pre><div class="line"># 启动</div><div class="line">sudo service jenkins start</div><div class="line"># 停止</div><div class="line">sudo service jenkins stop</div><div class="line"># 重启</div><div class="line">sudo service jenkins restart</div><div class="line">sudo chkconfig jenkins on</div></pre></td></tr></table></figure>
-<ul>
-<li>开启端口访问</li>
-</ul>
-<figure class="highlight plain"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line"># 可访问端口列表</div><div class="line">firewall-cmd --list-all</div><div class="line"># 开启8080端口外网访问</div><div class="line">firewall-cmd --zone=public --add-port=8080/tcp --permanent</div><div class="line">firewall-cmd --zone=public --add-service=http --permanent</div><div class="line">firewall-cmd --reload</div></pre></td></tr></table></figure>
-<hr>
-<p>love&amp;peace</p>
-]]></content>
-    
-    <summary type="html">
-    
-      &lt;p&gt;搭建Java服务器就是把JavaEE的Web部署环境和软件都安装好，这是我自己用旧的PC搭建的，所以只是单个服务器，不涉及分布式。这些安装步骤都可以单独找教程&lt;/p&gt;
-&lt;h2 id=&quot;0x00-前言&quot;&gt;&lt;a href=&quot;#0x00-前言&quot; class=&quot;headerlink&quot; title=&quot;0x00 前言&quot;&gt;&lt;/a&gt;0x00 前言&lt;/h2&gt;&lt;blockquote&gt;
-&lt;ul&gt;
-&lt;li&gt;gcc gcc-c++&lt;/li&gt;
-&lt;li&gt;JDK&lt;/li&gt;
-&lt;li&gt;Redis&lt;/li&gt;
-&lt;li&gt;Nginx&lt;/li&gt;
-&lt;li&gt;MySQL&lt;/li&gt;
-&lt;li&gt;NodeJS&lt;/li&gt;
-&lt;li&gt;Jenkins&lt;/li&gt;
-&lt;/ul&gt;
-&lt;/blockquote&gt;
-&lt;p&gt;可能需要的附加软件&lt;/p&gt;
-&lt;ul&gt;
-&lt;li&gt;git&lt;/li&gt;
-&lt;li&gt;Python&lt;/li&gt;
-&lt;li&gt;&lt;p&gt;Python pip&lt;br&gt;…&lt;/p&gt;
-    
-    </summary>
-    
-    
-      <category term="Java" scheme="http://micorochio.github.io/tags/Java/"/>
-    
-      <category term="Linux" scheme="http://micorochio.github.io/tags/Linux/"/>
-    
-      <category term="CentOS" scheme="http://micorochio.github.io/tags/CentOS/"/>
-    
-      <category term="服务器" scheme="http://micorochio.github.io/tags/%E6%9C%8D%E5%8A%A1%E5%99%A8/"/>
-    
-      <category term="Java Web" scheme="http://micorochio.github.io/tags/Java-Web/"/>
-    
-      <category term="nginx" scheme="http://micorochio.github.io/tags/nginx/"/>
-    
-      <category term="redis" scheme="http://micorochio.github.io/tags/redis/"/>
-    
-      <category term="jenkins" scheme="http://micorochio.github.io/tags/jenkins/"/>
-    
-      <category term="NodeJS" scheme="http://micorochio.github.io/tags/NodeJS/"/>
     
   </entry>
   
