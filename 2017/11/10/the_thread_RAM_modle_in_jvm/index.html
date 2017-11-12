@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="Hexo, Zing" />
+  <meta name="keywords" content="Java,笔记,Java基础,多线程," />
 
 
 
@@ -93,16 +93,17 @@
 
 
 <meta name="description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变">
+<meta name="keywords" content="Java,笔记,Java基础,多线程">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Zing">
-<meta property="og:url" content="http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/index.html">
+<meta property="og:url" content="http://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/index.html">
 <meta property="og:site_name" content="Zing">
 <meta property="og:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-d799c8032ee4ef56.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-ddfdd6dce25a2f0c.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-428914974fcf30ba.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-11-11T17:11:38.000Z">
+<meta property="og:updated_time" content="2017-11-12T02:38:53.000Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Zing">
 <meta name="twitter:description" content="知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。 0x01 内存模型图的思维转换 JVM定义了Java的虚拟内存模型，跟C/C++不一样的是，虚拟内存将物理内存划分了不同的区域，而C/C++是直接映射物理内存的。 笼统的来说，jvm一般将内存分为栈和堆，栈用来存储静态方法和静态变量，而堆用来存储对象和普通变量。 但是如果从线程的角度，内存模型会变">
@@ -134,7 +135,7 @@
 
 
 
-  <link rel="canonical" href="http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/"/>
+  <link rel="canonical" href="http://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/"/>
 
 
 
@@ -327,7 +328,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/">
+    <link itemprop="mainEntityOfPage" href="http://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -356,8 +357,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-12T00:32:44+08:00">
-                2017-11-12
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-11-10T09:17:45+08:00">
+                2017-11-10
               </time>
             
 
@@ -376,8 +377,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/11/12/the_thread_RAM_modle_in_jvm/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/11/12/the_thread_RAM_modle_in_jvm/" itemprop="commentsCount"></span>
+                <a href="/2017/11/10/the_thread_RAM_modle_in_jvm/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/11/10/the_thread_RAM_modle_in_jvm/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -385,7 +386,7 @@
 
           
           
-             <span id="/2017/11/12/the_thread_RAM_modle_in_jvm/" class="leancloud_visitors" data-flag-title="">
+             <span id="/2017/11/10/the_thread_RAM_modle_in_jvm/" class="leancloud_visitors" data-flag-title="">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -503,6 +504,18 @@
 
     <footer class="post-footer">
       
+        <div class="post-tags">
+          
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
+          
+        </div>
+      
 
       
         
@@ -607,7 +620,7 @@
             
             <div class="site-state-item site-state-tags">
               <a href="/tags/index.html">
-                <span class="site-state-item-count">60</span>
+                <span class="site-state-item-count">61</span>
                 <span class="site-state-item-name">标签</span>
               </a>
             </div>
