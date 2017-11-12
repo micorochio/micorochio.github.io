@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-11-12T02:38:53.000Z</updated>
+  <updated>2017-11-12T12:54:53.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title></title>
+    <title>Java线程内存模型</title>
     <link href="http://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/"/>
     <id>http://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/</id>
     <published>2017-11-10T01:17:45.000Z</published>
-    <updated>2017-11-12T02:38:53.000Z</updated>
+    <updated>2017-11-12T12:54:53.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
@@ -1330,7 +1330,7 @@
     <link href="http://micorochio.github.io/2017/03/09/basic-of-java-JDBC/"/>
     <id>http://micorochio.github.io/2017/03/09/basic-of-java-JDBC/</id>
     <published>2017-03-09T14:50:13.000Z</published>
-    <updated>2017-08-05T12:28:14.000Z</updated>
+    <updated>2017-08-05T12:29:06.000Z</updated>
     
     <content type="html"><![CDATA[<p>JDBC是Java连接数据库的标准，为了兼容大部分数据库，Java提出了JDBC标准，通过这个标准，让各个数据库提供实现支持，这样实现一处编码，处处运行的Java特性。</p>
 <p>习惯了ORM框架，却忘记了原本的JDBC，所以我觉得有必要复习来夯实一下基础。</p>
