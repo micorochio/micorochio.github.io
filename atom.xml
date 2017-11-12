@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2017-11-12T12:56:42.000Z</updated>
+  <updated>2017-11-12T15:41:42.000Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/"/>
     <id>http://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/</id>
     <published>2017-11-10T01:17:45.000Z</published>
-    <updated>2017-11-12T12:56:42.000Z</updated>
+    <updated>2017-11-12T15:41:42.000Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1112615-a84e67f6e9b3ad82.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>知道JVM内存模型可以在学习多线程的时候更加了解锁的机制和工作方式。下面是我的学习笔记，比较初级。</p>
@@ -85,7 +85,7 @@
 </blockquote>
 <p>如果想亲自试一试，可以看看：<a href="https://my.oschina.net/u/1047640/blog/510397" target="_blank" rel="external">证明32位java对long和double的写操作不是原子性的</a></p>
 <p>0x04 总结<br>以上只是对内存结构和部分读写规则的总结笔记，线程是java必过的硬指标，后面再更新新的学习笔记。</p>
-<p>by：zing<br>转载请注明出处：<a href="https://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/">https://micorochio.github.io/2017/11/12/the_thread_RAM_modle_in_jvm/</a></p>
+<p>by：zing<br>转载请注明出处：<a href="https://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/">https://micorochio.github.io/2017/11/10/the_thread_RAM_modle_in_jvm/</a></p>
 ]]></content>
     
     <summary type="html">
