@@ -74,7 +74,7 @@
 <link href="/css/main.css?v=5.1.1" rel="stylesheet" type="text/css" />
 
 
-  <meta name="keywords" content="日记," />
+  <meta name="keywords" content="Java,笔记,Java基础,多线程," />
 
 
 
@@ -92,17 +92,19 @@
 
 
 
-<meta name="description" content="讲道理，全栈工程师很少说自己是全栈，倒是一些什么都会一点的人喜欢把全栈挂嘴边，其实什么都不精通。一直想做个全栈，可惜还差得远。所以写个计划：一方面激励一下自己，防止放荡不羁的太过分；另一方做个积淀，是时候正儿八经的做事情了。 目前计划只是个雏形，不过肯定是围绕Java Web和NodeJS的后面也许会学习一下PHP和Python，但是不敢打包票，毕竟1口吃不下N个胖子 计划列表 Java 8新特性">
-<meta name="keywords" content="日记">
+<meta name="description" content="线程基础学习笔记 线程的创建与销毁 创建运行  一般情况，线程的创建有两种方式  实现Runnable接口，放入Thread类中执行 继承Thread类，覆写run方法。  启动：start();  注意点：thread对象虽然可以直接调用run方法，但是，直接调用run方法不会启动新线程，只是在当前线程执行run方法而已，只有使用start方法，才会启动新线程！   停止和销毁   自然停止，当">
+<meta name="keywords" content="Java,笔记,Java基础,多线程">
 <meta property="og:type" content="article">
-<meta property="og:title" content="个人全栈计划开始">
-<meta property="og:url" content="http://micorochio.github.io/2017/02/23/2017-02-2215-56-13/index.html">
+<meta property="og:title" content="Java线程基础学习笔记">
+<meta property="og:url" content="http://micorochio.github.io/2017/12/10/learning-thread-note-01/index.html">
 <meta property="og:site_name" content="Zing">
-<meta property="og:description" content="讲道理，全栈工程师很少说自己是全栈，倒是一些什么都会一点的人喜欢把全栈挂嘴边，其实什么都不精通。一直想做个全栈，可惜还差得远。所以写个计划：一方面激励一下自己，防止放荡不羁的太过分；另一方做个积淀，是时候正儿八经的做事情了。 目前计划只是个雏形，不过肯定是围绕Java Web和NodeJS的后面也许会学习一下PHP和Python，但是不敢打包票，毕竟1口吃不下N个胖子 计划列表 Java 8新特性">
-<meta property="og:updated_time" content="2017-03-09T07:05:12.000Z">
+<meta property="og:description" content="线程基础学习笔记 线程的创建与销毁 创建运行  一般情况，线程的创建有两种方式  实现Runnable接口，放入Thread类中执行 继承Thread类，覆写run方法。  启动：start();  注意点：thread对象虽然可以直接调用run方法，但是，直接调用run方法不会启动新线程，只是在当前线程执行run方法而已，只有使用start方法，才会启动新线程！   停止和销毁   自然停止，当">
+<meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-a8dafc7ea73afce7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
+<meta property="og:updated_time" content="2017-12-12T16:00:02.901Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="个人全栈计划开始">
-<meta name="twitter:description" content="讲道理，全栈工程师很少说自己是全栈，倒是一些什么都会一点的人喜欢把全栈挂嘴边，其实什么都不精通。一直想做个全栈，可惜还差得远。所以写个计划：一方面激励一下自己，防止放荡不羁的太过分；另一方做个积淀，是时候正儿八经的做事情了。 目前计划只是个雏形，不过肯定是围绕Java Web和NodeJS的后面也许会学习一下PHP和Python，但是不敢打包票，毕竟1口吃不下N个胖子 计划列表 Java 8新特性">
+<meta name="twitter:title" content="Java线程基础学习笔记">
+<meta name="twitter:description" content="线程基础学习笔记 线程的创建与销毁 创建运行  一般情况，线程的创建有两种方式  实现Runnable接口，放入Thread类中执行 继承Thread类，覆写run方法。  启动：start();  注意点：thread对象虽然可以直接调用run方法，但是，直接调用run方法不会启动新线程，只是在当前线程执行run方法而已，只有使用start方法，才会启动新线程！   停止和销毁   自然停止，当">
+<meta name="twitter:image" content="http://upload-images.jianshu.io/upload_images/1112615-a8dafc7ea73afce7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
 
 
 
@@ -130,13 +132,13 @@
 
 
 
-  <link rel="canonical" href="http://micorochio.github.io/2017/02/23/2017-02-2215-56-13/"/>
+  <link rel="canonical" href="http://micorochio.github.io/2017/12/10/learning-thread-note-01/"/>
 
 
 
 
 
-  <title>个人全栈计划开始 | Zing</title>
+  <title>Java线程基础学习笔记 | Zing</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -323,7 +325,7 @@
   
 
   <article class="post post-type-normal " itemscope itemtype="http://schema.org/Article">
-    <link itemprop="mainEntityOfPage" href="http://micorochio.github.io/2017/02/23/2017-02-2215-56-13/">
+    <link itemprop="mainEntityOfPage" href="http://micorochio.github.io/2017/12/10/learning-thread-note-01/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="zing">
@@ -340,7 +342,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">个人全栈计划开始</h1>
+          <h1 class="post-title" itemprop="name headline">Java线程基础学习笔记</h1>
         
 
         <div class="post-meta">
@@ -352,8 +354,8 @@
               
                 <span class="post-meta-item-text">发表于</span>
               
-              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-02-23T05:00:06+08:00">
-                2017-02-23
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-12-10T09:17:45+08:00">
+                2017-12-10
               </time>
             
 
@@ -372,8 +374,8 @@
                 <i class="fa fa-comment-o"></i>
               </span>
               
-                <a href="/2017/02/23/2017-02-2215-56-13/#SOHUCS" itemprop="discussionUrl">
-                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/02/23/2017-02-2215-56-13/" itemprop="commentsCount"></span>
+                <a href="/2017/12/10/learning-thread-note-01/#SOHUCS" itemprop="discussionUrl">
+                  <span id="changyan_count_unit" class="post-comments-count hc-comment-count" data-xid="2017/12/10/learning-thread-note-01/" itemprop="commentsCount"></span>
                 </a>
               
             
@@ -381,7 +383,7 @@
 
           
           
-             <span id="/2017/02/23/2017-02-2215-56-13/" class="leancloud_visitors" data-flag-title="个人全栈计划开始">
+             <span id="/2017/12/10/learning-thread-note-01/" class="leancloud_visitors" data-flag-title="Java线程基础学习笔记">
                <span class="post-meta-divider">|</span>
                <span class="post-meta-item-icon">
                  <i class="fa fa-eye"></i>
@@ -409,23 +411,55 @@
       
 
       
-        <p>讲道理，全栈工程师很少说自己是全栈，倒是一些什么都会一点的人喜欢把全栈挂嘴边，其实什么都不精通。<br>一直想做个全栈，可惜还差得远。所以写个计划：一方面激励一下自己，防止放荡不羁的太过分；另一方做个积淀，是时候正儿八经的做事情了。</p>
-<p>目前计划只是个雏形，不过肯定是围绕Java Web和NodeJS的<br>后面也许会学习一下PHP和Python，但是不敢打包票，毕竟1口吃不下N个胖子</p>
-<h2 id="计划列表"><a href="#计划列表" class="headerlink" title="计划列表"></a>计划列表</h2><ol>
-<li>Java 8新特性和老知识细嚼慢咽</li>
-<li>Spring家族</li>
-<li>MySQL</li>
-<li>ES6.0</li>
-<li>NodeJS</li>
-<li>TypeScript</li>
-<li>Angular 2 等前端框架</li>
+        <p>线程基础学习笔记<br><img src="http://upload-images.jianshu.io/upload_images/1112615-a8dafc7ea73afce7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<h2 id="线程的创建与销毁"><a href="#线程的创建与销毁" class="headerlink" title="线程的创建与销毁"></a>线程的创建与销毁</h2><ul>
+<li>创建运行</li>
+</ul>
+<p>一般情况，线程的创建有两种方式</p>
+<ol>
+<li>实现Runnable接口，放入Thread类中执行</li>
+<li>继承Thread类，覆写run方法。</li>
 </ol>
-<p>……乍一看已经挖坑很深了，后面服务器运维的东西已经不敢提上日程了。如果顺利的话，大概得明年才能开启。<br>目前打算Java语言特性会作为穿插写一写，先从Spring开始扒起，和持久层一起看，主要是自己看的东西，笔记，也可能是转载。</p>
-<p>如果努力的话，上半年能把Spring家族的坑，填个十之八九，接下来就是新的JavaScript、NodeJS和一些前端框架了<br>年底如果没完成，自打80大板<br><a id="more"></a></p>
-<h2 id="离开时间的计划就是扯淡"><a href="#离开时间的计划就是扯淡" class="headerlink" title="离开时间的计划就是扯淡"></a>离开时间的计划就是扯淡</h2><p>计划需要有个期限，毕竟自己是个拖延症晚期，所以得需要有个准确是期限去完成。<br>但是计划肯定是赶不上变化的，因此我只会对1周进行详细规划，中间如果出问题，下周计划时，方便调整。</p>
-<p>一周的时间说长不长，说短不短。希望自己能有所收获，并能把收获记录下来。</p>
-<h2 id="叨逼叨"><a href="#叨逼叨" class="headerlink" title="叨逼叨"></a>叨逼叨</h2><p>最恨自己不够坚持，没有耐心，这次这个坑填不完就糗了，毕竟已经公开。<br>不过如果写东西写勤快了，也许可能会有错误，我会在简书上开个专栏，如果错了希望大家能积极指出。我会积极改正！</p>
-<p>先这么定着，这个系列会用FallStack（FS）标记。并且将会写一个专门的目录文，后面如果有变化的话，会更新这个目录。</p>
+<p>启动：<code>start();</code></p>
+<blockquote>
+<p>注意点：thread对象虽然可以直接调用run方法，但是，直接调用run方法不会启动新线程，只是在当前线程执行run方法而已，只有使用start方法，才会启动新线程！</p>
+</blockquote>
+<ul>
+<li>停止和销毁</li>
+</ul>
+<ol>
+<li>自然停止，当run方法执行完成后，线程会自动停止。</li>
+<li>stop方法强制停止。</li>
+<li>interrupt中断线程。</li>
+</ol>
+<p>自然停止的线程无须关系，因为执行结束就自动停止了。<br>然而对可以无限时间执行的线程，需要注意：</p>
+<blockquote>
+<p><strong>stop方法不能手动直接调用。</strong><br>stop方法会直接将线程置空，会抛出<code>ThreadDeath</code>错误，无法预料线程对数据的影响。</p>
+<p><strong>interrupt方法对处于阻塞中的线程，无法处理</strong><br>线程执行sleep或wait方法时，或是读取文件，执行interrupt会抛出异常，因为中断线程导致线程无法完成正在等待的任务。</p>
+</blockquote>
+<p>提倡方法,run方法中使用isInterrupted()作为终止条件<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">run</span><span class="params">()</span> </span>&#123;</div><div class="line">     <span class="keyword">while</span>(!isInterrupted())&#123;</div><div class="line">         <span class="comment">// TODO 正常逻辑</span></div><div class="line">     &#125;</div><div class="line"> &#125;</div><div class="line"></div><div class="line"> <span class="function"><span class="keyword">public</span> <span class="keyword">synchronized</span> <span class="keyword">void</span> <span class="title">stopTheThread</span><span class="params">()</span></span>&#123;</div><div class="line">     isInterrupted = <span class="keyword">false</span>;</div><div class="line"> &#125;</div></pre></td></tr></table></figure></p>
+<p>这样调用interrupt方法时，逻辑会在执行完成后停止线程。</p>
+<blockquote>
+<p><em>ps: interrupt不能中断正在进行的数据写入。</em></p>
+</blockquote>
+<p>##JVM中线程的内存分布工作方式，以及线程通信</p>
+<p><a href="http://www.jianshu.com/p/4e0bfcb1711e" target="_blank" rel="external">Java线程的内存模型基础知识</a></p>
+<p>##线程中的异常处理</p>
+<p>所有线程都不允许抛出未捕获的checked exception，如果线程任务中有checked exception，需要自己catch住，并处理掉，如果是unchecked exception出现的话，这个线程就挂了，当然，不会直接影响其他线程，导致其他线程或宿主宕掉。</p>
+<p>如果想处理<code>unchecked exception</code>，可以使用<code>public void uncaughtException(Thread t, Throwable e)</code> 方法处理,但是这个方法依旧在<code>Thread</code>内部。而且若是在线程池中，这个方法是不会被调用的。<br>╮(╯╰)╭</p>
+<h2 id="死锁与解决办法"><a href="#死锁与解决办法" class="headerlink" title="死锁与解决办法"></a>死锁与解决办法</h2><p>什么是线程死锁，看一段代码</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">String lock1 = <span class="string">"l1"</span>;</div><div class="line">String lock2 = <span class="string">"l2"</span>;</div><div class="line"></div><div class="line">Thread t1 = <span class="keyword">new</span> Thread(()-&gt;&#123;</div><div class="line">    <span class="keyword">synchronized</span> (lock1)&#123;</div><div class="line">        System.out.println(<span class="string">"t1:"</span>+lock1);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">1000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">synchronized</span> (lock2)&#123;</div><div class="line">            System.out.println(<span class="string">"t1:"</span>+lock2);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">Thread t2 = <span class="keyword">new</span> Thread(()-&gt;&#123;</div><div class="line">    <span class="keyword">synchronized</span> (lock2)&#123;</div><div class="line">        System.out.println(<span class="string">"t2:"</span>+lock1);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">1000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">synchronized</span> (lock1)&#123;</div><div class="line">            System.out.println(<span class="string">"t2:"</span>+lock1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">t1.start();</div><div class="line">t2.start();</div></pre></td></tr></table></figure>
+<p>这段代码运行后，无法退出，因为t1进入sleep后，t2占用了lock2，然后t2 没有释放lock2 就进入了sleep，切换回t1，这时候lock2被占用，无法进一步执行，等待线程时长结束后，t1没有释放lock1 导致t2也不能进入下一步执行,这就形成了死锁。</p>
+<p>避免死锁可以从下面几个角度去修改代码:</p>
+<blockquote>
+<ol>
+<li>破坏互斥条件：不要出现一个资源只能被一个进程占用，直到该进程释放资源 </li>
+<li>取消请求和保持条件：当一个线程等不到请求的资源时，不要阻塞。 </li>
+<li>剥夺条件：尽量不要让一个变量只能被一个线程独占，</li>
+<li>打破循环等待：当发生死锁时，所等待的进程必定会形成一个环路，尽量不要让线程相互占用对方的独立资源，从而导致循环阻塞。</li>
+</ol>
+</blockquote>
+<p>这四个满足一个就可以避免死锁的发生。</p>
 
       
     </div>
@@ -455,7 +489,13 @@
       
         <div class="post-tags">
           
-            <a href="/tags/日记/" rel="tag"># 日记</a>
+            <a href="/tags/Java/" rel="tag"># Java</a>
+          
+            <a href="/tags/笔记/" rel="tag"># 笔记</a>
+          
+            <a href="/tags/Java基础/" rel="tag"># Java基础</a>
+          
+            <a href="/tags/多线程/" rel="tag"># 多线程</a>
           
         </div>
       
@@ -468,8 +508,8 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
-              <a href="/2017/02/13/2017-02-0815-54-42/" rel="next" title="（矫情）关于编程">
-                <i class="fa fa-chevron-left"></i> （矫情）关于编程
+              <a href="/2017/11/10/the_thread_RAM_modle_in_jvm/" rel="next" title="Java线程的内存模型基础知识">
+                <i class="fa fa-chevron-left"></i> Java线程的内存模型基础知识
               </a>
             
           </div>
@@ -477,10 +517,6 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2017/02/25/introduction-of-AOP/" rel="prev" title="(FS计划)AOP和Spring中AOP的简单介绍">
-                (FS计划)AOP和Spring中AOP的简单介绍 <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -609,7 +645,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#计划列表"><span class="nav-number">1.</span> <span class="nav-text">计划列表</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#离开时间的计划就是扯淡"><span class="nav-number">2.</span> <span class="nav-text">离开时间的计划就是扯淡</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#叨逼叨"><span class="nav-number">3.</span> <span class="nav-text">叨逼叨</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的创建与销毁"><span class="nav-number">1.</span> <span class="nav-text">线程的创建与销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁与解决办法"><span class="nav-number">2.</span> <span class="nav-text">死锁与解决办法</span></a></li></ol></div>
             
 
           </div>
