@@ -95,7 +95,7 @@
 <meta name="description" content="光荣在于平淡艰巨在于漫长无论我多早迎接这清晨在路上都会有人在我以为别人还在梦乡但无论什么时候这个世界都比我快一步">
 <meta property="og:type" content="website">
 <meta property="og:title" content="Zing">
-<meta property="og:url" content="http://micorochio.github.io/tags/nginx/index.html">
+<meta property="og:url" content="http://micorochio.github.io/tags/Stream/index.html">
 <meta property="og:site_name" content="Zing">
 <meta property="og:description" content="光荣在于平淡艰巨在于漫长无论我多早迎接这清晨在路上都会有人在我以为别人还在梦乡但无论什么时候这个世界都比我快一步">
 <meta name="twitter:card" content="summary">
@@ -128,13 +128,13 @@
 
 
 
-  <link rel="canonical" href="http://micorochio.github.io/tags/nginx/"/>
+  <link rel="canonical" href="http://micorochio.github.io/tags/Stream/"/>
 
 
 
 
 
-  <title>标签: nginx | Zing</title>
+  <title>标签: Stream | Zing</title>
 </head>
 
 <body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
@@ -313,7 +313,7 @@
 
   <div id="posts" class="posts-collapse">
     <div class="collection-title">
-      <h1>nginx<small>标签</small>
+      <h1>Stream<small>标签</small>
       </h1>
     </div>
 
@@ -325,9 +325,9 @@
 
       <h2 class="post-title">
         
-            <a class="post-title-link" href="/2017/01/20/mark-CentOS-7-Java-Web-Server-building/" itemprop="url">
+            <a class="post-title-link" href="/2018/01/22/the-stream-in-java8-01/" itemprop="url">
               
-                <span itemprop="name">CentOS7 搭建Java Web服务器笔记</span>
+                <span itemprop="name">学习Java8中的Stream （一）起步</span>
               
             </a>
         
@@ -335,9 +335,9 @@
 
       <div class="post-meta">
         <time class="post-time" itemprop="dateCreated"
-              datetime="2017-01-20T01:53:01+08:00"
-              content="2017-01-20" >
-          01-20
+              datetime="2018-01-22T07:32:52+08:00"
+              content="2018-01-22" >
+          01-22
         </time>
       </div>
 
@@ -708,42 +708,6 @@
               success: function(newcounter) {
                 var $element = $(document.getElementById(url));
                 $element.find('.leancloud-visitors-count').text(newcounter.get('time'));
-              },
-              error: function(newcounter, error) {
-                console.log('Failed to create');
-              }
-            });
-          }
-        },
-        error: function(error) {
-          console.log('Error:' + error.code + " " + error.message);
-        }
-      });
-    }
-
-    $(function() {
-      var Counter = AV.Object.extend("Counter");
-      if ($('.leancloud_visitors').length == 1) {
-        addCount(Counter);
-      } else if ($('.post-title-link').length > 1) {
-        showTime(Counter);
-      }
-    });
-  </script>
-
-
-
-  
-
-  
-
-  
-
-  
-
-</body>
-</html>
-$element.find('.leancloud-visitors-count').text(newcounter.get('time'));
               },
               error: function(newcounter, error) {
                 console.log('Failed to create');
