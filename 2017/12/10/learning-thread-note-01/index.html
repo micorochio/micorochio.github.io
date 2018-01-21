@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="Zing">
 <meta property="og:description" content="线程学习笔记，转载请注明出处：https://micorochio.github.io/2017/12/10/learning-thread-note-01/">
 <meta property="og:image" content="http://upload-images.jianshu.io/upload_images/1112615-a8dafc7ea73afce7.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2017-12-12T16:04:08.448Z">
+<meta property="og:updated_time" content="2017-12-13T15:30:55.054Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Java线程学习笔记">
 <meta name="twitter:description" content="线程学习笔记，转载请注明出处：https://micorochio.github.io/2017/12/10/learning-thread-note-01/">
@@ -444,11 +444,10 @@
 <blockquote>
 <p><em>ps: interrupt不能中断正在进行的数据写入。</em></p>
 </blockquote>
-<p>##JVM中线程的内存分布工作方式，以及线程通信</p>
-<p><a href="http://www.jianshu.com/p/4e0bfcb1711e" target="_blank" rel="external">Java线程的内存模型基础知识</a></p>
+<h2 id="JVM中线程的内存分布工作方式，以及线程通信"><a href="#JVM中线程的内存分布工作方式，以及线程通信" class="headerlink" title="JVM中线程的内存分布工作方式，以及线程通信"></a>JVM中线程的内存分布工作方式，以及线程通信</h2><p><a href="http://www.jianshu.com/p/4e0bfcb1711e" target="_blank" rel="external">Java线程的内存模型基础知识</a></p>
 <p>##线程中的异常处理</p>
 <p>所有线程都不允许抛出未捕获的checked exception，如果线程任务中有checked exception，需要自己catch住，并处理掉，如果是unchecked exception出现的话，这个线程就挂了，当然，不会直接影响其他线程，导致其他线程或宿主宕掉。</p>
-<p>如果想处理<code>unchecked exception</code>，可以使用<code>public void uncaughtException(Thread t, Throwable e)</code> 方法处理,但是这个方法依旧在<code>Thread</code>内部。而且若是在线程池中，这个方法是不会被调用的。<br>╮(╯╰)╭</p>
+<p>如果想处理<code>unchecked exception</code>，可以使用<code>public void uncaughtException(Thread t, Throwable e)</code> 方法处理,但是这个方法依旧在<code>Thread</code>内部。而且若是在线程池中，这个方法是不会被调用的。<br>╮(╯ ╰)╭</p>
 <h2 id="死锁与解决办法"><a href="#死锁与解决办法" class="headerlink" title="死锁与解决办法"></a>死锁与解决办法</h2><p>什么是线程死锁，看一段代码</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">String lock1 = <span class="string">"l1"</span>;</div><div class="line">String lock2 = <span class="string">"l2"</span>;</div><div class="line"></div><div class="line">Thread t1 = <span class="keyword">new</span> Thread(()-&gt;&#123;</div><div class="line">    <span class="keyword">synchronized</span> (lock1)&#123;</div><div class="line">        System.out.println(<span class="string">"t1:"</span>+lock1);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">1000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">synchronized</span> (lock2)&#123;</div><div class="line">            System.out.println(<span class="string">"t1:"</span>+lock2);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">Thread t2 = <span class="keyword">new</span> Thread(()-&gt;&#123;</div><div class="line">    <span class="keyword">synchronized</span> (lock2)&#123;</div><div class="line">        System.out.println(<span class="string">"t2:"</span>+lock1);</div><div class="line">        <span class="keyword">try</span> &#123;</div><div class="line">            Thread.sleep(<span class="number">1000</span>);</div><div class="line">        &#125; <span class="keyword">catch</span> (InterruptedException e) &#123;</div><div class="line">            e.printStackTrace();</div><div class="line">        &#125;</div><div class="line"></div><div class="line">        <span class="keyword">synchronized</span> (lock1)&#123;</div><div class="line">            System.out.println(<span class="string">"t2:"</span>+lock1);</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line">&#125;);</div><div class="line"></div><div class="line"></div><div class="line">t1.start();</div><div class="line">t2.start();</div></pre></td></tr></table></figure>
 <p>这段代码运行后，无法退出，因为t1进入sleep后，t2占用了lock2，然后t2 没有释放lock2 就进入了sleep，切换回t1，这时候lock2被占用，无法进一步执行，等待线程时长结束后，t1没有释放lock1 导致t2也不能进入下一步执行,这就形成了死锁。</p>
@@ -520,6 +519,10 @@
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
+            
+              <a href="/2018/01/21/the-stream-in-java8-01/" rel="prev" title="">
+                 <i class="fa fa-chevron-right"></i>
+              </a>
             
           </div>
         </div>
@@ -593,7 +596,7 @@
           
             <div class="site-state-item site-state-posts">
               <a href="/archives">
-                <span class="site-state-item-count">40</span>
+                <span class="site-state-item-count">41</span>
                 <span class="site-state-item-name">日志</span>
               </a>
             </div>
@@ -648,7 +651,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的创建与销毁"><span class="nav-number">1.</span> <span class="nav-text">线程的创建与销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁与解决办法"><span class="nav-number">2.</span> <span class="nav-text">死锁与解决办法</span></a></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#线程的创建与销毁"><span class="nav-number">1.</span> <span class="nav-text">线程的创建与销毁</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#JVM中线程的内存分布工作方式，以及线程通信"><span class="nav-number">2.</span> <span class="nav-text">JVM中线程的内存分布工作方式，以及线程通信</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#死锁与解决办法"><span class="nav-number">3.</span> <span class="nav-text">死锁与解决办法</span></a></li></ol></div>
             
 
           </div>
@@ -671,7 +674,7 @@
         <div class="copyright" >
   
   &copy; 
-  <span itemprop="copyrightYear">2017</span>
+  <span itemprop="copyrightYear">2018</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
