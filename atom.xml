@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2018-01-21T15:55:15.332Z</updated>
+  <updated>2018-01-21T16:00:33.624Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -20,11 +20,12 @@
     <link href="http://micorochio.github.io/2018/01/22/the-stream-in-java8-01/"/>
     <id>http://micorochio.github.io/2018/01/22/the-stream-in-java8-01/</id>
     <published>2018-01-21T23:32:52.000Z</published>
-    <updated>2018-01-21T15:55:15.332Z</updated>
+    <updated>2018-01-21T16:00:33.624Z</updated>
     
     <content type="html"><![CDATA[<p>不想再用for嵌套for操作了，java8 带来了新的API —— Stream，非常强大！<br>Stream中文翻译成流，是一个支持串行和并行操作元素的序列，也是Lambda表达式配合使用的强大工具。</p>
 <p>源码在java.util.stream中，感兴趣可以阅读阅读。</p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1112615-b50c59601c96c8df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
+<a id="more"></a>
 <h2 id="0x00-java8-中的流是什么"><a href="#0x00-java8-中的流是什么" class="headerlink" title="0x00 java8 中的流是什么"></a>0x00 java8 中的流是什么</h2><p>在编程中，对一串数据进行0个或者多个中间操作后，最后再获得结果。这个操作在没有流的情况下一般会涉及到多次循环，这是非常低效的。</p>
 <p>流是为了处理一串数据（sequence），而不需要多次循环的一种方式。</p>
 <p>流在操作序列的时候，会将数据放在一个叫Stream Pipeline的地方，这个地方会有三部分</p>
@@ -69,13 +70,14 @@
 <h5 id="3x02-验证流延迟操作"><a href="#3x02-验证流延迟操作" class="headerlink" title="3x02 验证流延迟操作"></a>3x02 验证流延迟操作</h5><p>流只要在终止操作(及早求值)时，才会对数据统一做操作，在没有遇到求值操作的时候，惰性操作代码不会被执行。<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div></pre></td><td class="code"><pre><div class="line">Stream&lt;Integer&gt; trans = Stream.of(<span class="number">11</span>, <span class="number">70</span>, <span class="number">23</span>, <span class="number">46</span>, <span class="number">50</span>, <span class="number">100</span>, <span class="number">10</span>, <span class="number">24</span>, <span class="number">18</span>, <span class="number">19</span>, <span class="number">2</span>);</div><div class="line">trans.map(i-&gt;&#123;</div><div class="line">    System.out.println(i);</div><div class="line">    <span class="keyword">return</span> i;</div><div class="line">&#125;);</div></pre></td></tr></table></figure></p>
 <p><img src="http://upload-images.jianshu.io/upload_images/1112615-e44c8ecb04c55176.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="运行结果，上面都没打印"></p>
 <h5 id="3x02-不影响源数据"><a href="#3x02-不影响源数据" class="headerlink" title="3x02 不影响源数据"></a>3x02 不影响源数据</h5><p>可以创建一个List去实践，这里不写代码，当流执行完成之后，源List的数据是不会发生变化的<br>大家可以自己实践一下</p>
-<p>by:Zing<br>转载请注明出处：</p>
+<p>by:Zing<br>转载请注明出处：<a href="https://micorochio.github.io/2018/01/21/the-stream-in-java8-01/">https://micorochio.github.io/2018/01/21/the-stream-in-java8-01/</a></p>
 ]]></content>
     
     <summary type="html">
     
       &lt;p&gt;不想再用for嵌套for操作了，java8 带来了新的API —— Stream，非常强大！&lt;br&gt;Stream中文翻译成流，是一个支持串行和并行操作元素的序列，也是Lambda表达式配合使用的强大工具。&lt;/p&gt;
-&lt;p&gt;源码在java.util.stream中，感兴趣可以阅
+&lt;p&gt;源码在java.util.stream中，感兴趣可以阅读阅读。&lt;/p&gt;
+&lt;p&gt;&lt;img src=&quot;http://upload-images.jianshu.io/upload_images/1112615-b50c59601c96c8df.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240&quot; alt=&quot;&quot;&gt;&lt;/p&gt;
     
     </summary>
     
