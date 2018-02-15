@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2018-02-15T12:14:55.708Z</updated>
+  <updated>2018-02-15T15:00:34.493Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -16,11 +16,11 @@
   <generator uri="http://hexo.io/">Hexo</generator>
   
   <entry>
-    <title>Java8  Stream 系列（二）Stream应当注意点</title>
+    <title>Java8  Stream 系列（二）Stream应当注意的点</title>
     <link href="http://micorochio.github.io/2018/02/16/the-stream-in-java8-02/"/>
     <id>http://micorochio.github.io/2018/02/16/the-stream-in-java8-02/</id>
     <published>2018-02-15T20:06:38.000Z</published>
-    <updated>2018-02-15T12:14:55.708Z</updated>
+    <updated>2018-02-15T15:00:34.493Z</updated>
     
     <content type="html"><![CDATA[<p><img src="http://upload-images.jianshu.io/upload_images/1112615-7748300c31892ce9.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""></p>
 <p>上一篇文章写了流的基本知识，大约知道了流是用来处理序列集合的武功秘籍。<br>集合关注的是数据存储本身，流关注的数据计算和处理。本篇文章来说明一下适用流时应当注意的几点<br><a id="more"></a></p>
