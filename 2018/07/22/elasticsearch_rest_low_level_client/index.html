@@ -100,7 +100,7 @@
 <meta property="og:site_name" content="Zing">
 <meta property="og:description" content="开始看Elasticsearch Java API 的时候，被这段话浇了盆凉水  We plan on deprecating the TransportClient in Elasticsearch 7.0 and removing it completely in 8.0. Instead, you should be using the Java High Level REST Client">
 <meta property="og:image" content="https://upload-images.jianshu.io/upload_images/1112615-32ec6c2e8a003648.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240">
-<meta property="og:updated_time" content="2018-07-21T08:04:49.445Z">
+<meta property="og:updated_time" content="2018-07-21T08:13:55.776Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Elasticsearch Java Rest Client 上手指南（上）">
 <meta name="twitter:description" content="开始看Elasticsearch Java API 的时候，被这段话浇了盆凉水  We plan on deprecating the TransportClient in Elasticsearch 7.0 and removing it completely in 8.0. Instead, you should be using the Java High Level REST Client">
@@ -422,6 +422,7 @@
 <p>TransportClient这玩意儿确实很难用，抛开连接池不稳定不说，写完代码之后就是下图视感：</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/1112615-32ec6c2e8a003648.jpg?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt="OMG"></p>
 <p>所以写完因为之后，准备用Java Rest Client来重构一下，用于兼容ES 5、6、7、甚至8</p>
+<a id="more"></a>
 <h2 id="Java-Low-Level-REST-Client"><a href="#Java-Low-Level-REST-Client" class="headerlink" title="Java Low Level REST Client"></a><a href="https://www.elastic.co/guide/en/elasticsearch/client/java-rest/current/java-rest-low.html" target="_blank" rel="external">Java Low Level REST Client</a></h2><h3 id="1：-特性"><a href="#1：-特性" class="headerlink" title="1： 特性"></a>1： 特性</h3><blockquote>
 <ul>
 <li>最小依赖</li>
@@ -477,7 +478,7 @@
 </ul>
 </blockquote>
 <h3 id="6：-Sniffer"><a href="#6：-Sniffer" class="headerlink" title="6： Sniffer"></a>6： Sniffer</h3><p>用于自动发现Elasticsearch的节点，并设置为restClient实例，初始化后大约5分钟就会从ES中获取最新的节点列表，支持自定义时间，要支持失败时嗅探ES集群的节点，失败嗅探需要在每个RestClient中的Sniffer中添加一个<code>SniffOnFailureListener</code>。</p>
-<p>by: <code>MAX Zing</code>  blog:<a href="https://micorochio.github.io">https://micorochio.github.io</a><br>转载请注明出处：<a href="https://www.jianshu.com/p/c1f2161a5d22" target="_blank" rel="external">https://www.jianshu.com/p/c1f2161a5d22</a><br>文章若有错误，请不吝指正。<br>下篇 High Level Rest Client的介绍：<a href="https://www.jianshu.com/p/d2c8326e8fa3" target="_blank" rel="external">https://www.jianshu.com/p/d2c8326e8fa3</a></p>
+<p>by: <code>MAX Zing</code>  blog:<a href="https://micorochio.github.io">https://micorochio.github.io</a><br>转载请注明出处：<a href="https://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/">https://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/</a><br>文章若有错误，请不吝指正。<br>下篇 High Level Rest Client的介绍：<a href="https://www.jianshu.com/p/d2c8326e8fa3" target="_blank" rel="external">https://www.jianshu.com/p/d2c8326e8fa3</a></p>
 
       
     </div>
