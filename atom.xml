@@ -5,7 +5,7 @@
   <link href="/atom.xml" rel="self"/>
   
   <link href="http://micorochio.github.io/"/>
-  <updated>2018-07-22T13:35:57.315Z</updated>
+  <updated>2018-07-22T13:37:46.082Z</updated>
   <id>http://micorochio.github.io/</id>
   
   <author>
@@ -20,7 +20,7 @@
     <link href="http://micorochio.github.io/2018/07/23/elasticsearch-rest-high-level-client/"/>
     <id>http://micorochio.github.io/2018/07/23/elasticsearch-rest-high-level-client/</id>
     <published>2018-07-22T21:33:11.000Z</published>
-    <updated>2018-07-22T13:35:57.315Z</updated>
+    <updated>2018-07-22T13:37:46.082Z</updated>
     
     <content type="html"><![CDATA[<p>High Level Rest Clent到现在还不是完成版。我试了一下，5.6版本的<code>RestHighLevelClient</code>就这么些API</p>
 <p><img src="https://upload-images.jianshu.io/upload_images/1112615-76bb848d9bbcc97b.png?imageMogr2/auto-orient/strip%7CimageView2/2/w/1240" alt=""><br> 包含了基本的增删改查和批量操作</p>
@@ -78,6 +78,7 @@
 <p>有时候需要查询的数据太多，可以考虑使用<code>SearchRequest.scroll()</code>方法拿到<code>scrollId</code>;之后再使用<code>SearchScrollRequest</code><br>其用法如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div></pre></td><td class="code"><pre><div class="line">SearchRequest searchRequest = <span class="keyword">new</span> SearchRequest(<span class="string">"posts"</span>);</div><div class="line">SearchSourceBuilder searchSourceBuilder = <span class="keyword">new</span> SearchSourceBuilder();</div><div class="line">searchSourceBuilder.query(matchQuery(<span class="string">"title"</span>, <span class="string">"Elasticsearch"</span>));</div><div class="line">searchSourceBuilder.size(size); </div><div class="line">searchRequest.source(searchSourceBuilder);</div><div class="line">searchRequest.scroll(TimeValue.timeValueMinutes(<span class="number">1L</span>)); </div><div class="line">SearchResponse searchResponse = client.search(searchRequest);</div><div class="line">String scrollId = searchResponse.getScrollId(); </div><div class="line">SearchScrollRequest scrollRequest = <span class="keyword">new</span> SearchScrollRequest(scrollId); </div><div class="line">scrollRequest.scroll(TimeValue.timeValueSeconds(<span class="number">30</span>));</div><div class="line">SearchResponse searchScrollResponse = client.searchScroll(scrollRequest);</div><div class="line">scrollId = searchScrollResponse.getScrollId();  </div><div class="line">hits = searchScrollResponse.getHits(); </div><div class="line">assertEquals(<span class="number">3</span>, hits.getTotalHits());</div><div class="line">assertEquals(<span class="number">1</span>, hits.getHits().length);</div><div class="line">assertNotNull(scrollId);</div></pre></td></tr></table></figure></p>
 <p>Scroll查询的使用场景是密集且前后有关联的查询。如果只是一般的分页，可以使用size from来处理</p>
 <p>官方还列出了查询构造的方式。可以根据自己的需要，详细翻阅。</p>
+<p>需要了解基础的，请查看：<a href="https://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/">Elasticsearch Java Rest Client 上手指南（上）</a></p>
 <p>转载请注明出处：<a href="https://micorochio.github.io/2018/07/22/elasticsearch_rest_high_level_client/">https://micorochio.github.io/2018/07/22/elasticsearch_rest_high_level_client/</a><br>如有错误，请不吝指正。谢谢</p>
 ]]></content>
     
@@ -104,7 +105,7 @@
     <link href="http://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/"/>
     <id>http://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/</id>
     <published>2018-07-21T16:02:45.000Z</published>
-    <updated>2018-07-21T08:13:55.776Z</updated>
+    <updated>2018-07-21T15:23:21.387Z</updated>
     
     <content type="html"><![CDATA[<p>开始看Elasticsearch Java API 的时候，被这段话浇了盆凉水</p>
 <blockquote>
