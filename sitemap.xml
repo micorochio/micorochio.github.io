@@ -2,9 +2,23 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   
   <url>
+    <loc>http://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/</loc>
+    
+    <lastmod>2018-07-31T15:21:29.354Z</lastmod>
+    
+  </url>
+  
+  <url>
     <loc>http://micorochio.github.io/2018/07/23/elasticsearch-rest-high-level-client/</loc>
     
-    <lastmod>2018-07-22T13:37:46.082Z</lastmod>
+    <lastmod>2018-07-31T15:21:23.610Z</lastmod>
+    
+  </url>
+  
+  <url>
+    <loc>http://micorochio.github.io/2018/08/01/spring-boot-with-elasticsearch-rest-client/</loc>
+    
+    <lastmod>2018-07-31T15:18:18.386Z</lastmod>
     
   </url>
   
@@ -19,13 +33,6 @@
     <loc>http://micorochio.github.io/2017/08/06/reading-effective-java-02/</loc>
     
     <lastmod>2018-07-21T15:29:54.209Z</lastmod>
-    
-  </url>
-  
-  <url>
-    <loc>http://micorochio.github.io/2018/07/22/elasticsearch_rest_low_level_client/</loc>
-    
-    <lastmod>2018-07-21T15:23:21.387Z</lastmod>
     
   </url>
   
